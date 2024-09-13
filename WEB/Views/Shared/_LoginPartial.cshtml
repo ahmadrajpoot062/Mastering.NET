@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<myAppUser> SignInManager
+@inject UserManager<myAppUser> UserManager
+
+@{
+    string firstName = null;
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User); // Get the current user
+        firstName = user?.FirstName; // Assuming the user's first name is stored in the 'FirstName' property
+    }
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="btn-getstarted btn-signup position-relative fw-bold rounded-start-pill" style="margin-right: -50px;" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+        Hi @firstName!
+    </a>
+
+    <a class="btn-getstarted btn-login position-relative fw-bold rounded-start-pill rounded-end-pill" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        Logout
+    </a>
+}
+else
+{
+    <a class="btn-getstarted btn-signup position-relative fw-bold rounded-start-pill" style="margin-right: -50px;" asp-area="Identity" asp-page="/Account/Register">
+        Sign Up
+    </a>
+
+    <a class="btn-getstarted btn-login position-relative fw-bold rounded-start-pill rounded-end-pill" asp-area="Identity" asp-page="/Account/Login">
+        Login
+    </a>
+}

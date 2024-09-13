@@ -1,0 +1,20 @@
+﻿@using Mastering.NET.Models;
+
+@inject SignInManager<myAppUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+
+
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item my-1"><a class="nav-link btn text-white" style="@(ViewData["Title"]?.ToString() == "Profile" ? "background:#3D90AA; border:2px solid black;" : "")" id="profile" asp-page="./Index"><i class="bi bi-person-vcard me-2"></i>Profile</a></li>
+    <li class="nav-item my-1"><a class="nav-link btn text-white" style="@(ViewData["Title"]?.ToString() == "Manage Email" ? "background: #3D90AA; border:2px solid black;" : "")" id="email" asp-page="./Email"><i class="fa fa-solid fa-envelope me-2"></i>Email</a></li>
+    <li class="nav-item my-1"><a class="nav-link btn text-white" style="@(ViewData["Title"]?.ToString() == "Change password" ? "background: #3D90AA; border:2px solid black;" : "")" id="change-password" asp-page="./ChangePassword"><i class="fa fa-key me-2" aria-hidden="true"></i>Password</a></li>
+    @if (hasExternalLogins)
+    {
+        <li id="external-logins" class="nav-item my-1"><a id="external-login" class="nav-link btn text-white" style="@(ViewData["Title"]?.ToString() == "Manage your external logins" ? "background: #3D90AA; border:2px solid black;" : "")" asp-page="./ExternalLogins">External logins</a></li>
+    }
+    <li class="nav-item my-1"><a class="nav-link btn text-white" style="@(ViewData["Title"]?.ToString() == "Two-factor authentication (2FA)" ? "background: #3D90AA; border:2px solid black;" : "")" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
+    <li class="nav-item my-1"><a class="nav-link btn text-white" style="@(ViewData["Title"]?.ToString() == "Personal Data" ? "background: #3D90AA; border:2px solid black;" : "")" id="personal-data" asp-page="./PersonalData"><i class="bi bi-info-circle me-2"></i>Personal data</a></li>
+</ul>
