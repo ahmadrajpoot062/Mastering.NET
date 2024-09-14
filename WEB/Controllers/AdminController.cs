@@ -3,6 +3,7 @@ using Core.Entities;
 using Mastering.NET.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Mastering.NET.Controllers
 {
@@ -24,12 +25,15 @@ namespace Mastering.NET.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTutorial(string tutorialName)
         {
+            // Create a new topic and add it to the database
             Topic t = new Topic { TopicName = tutorialName };
             await _topicRepository.Add(t);
 
+            // Get the updated list of topics and lectures
             List<Topic> topics = await _topicRepository.GetAll();
             List<Lecture> lectures = await _lectureRepository.GetAll();
 
+            // Create the list of TopicLectureViewModel to pass to the view
             List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
 
             foreach (var topic in topics)
@@ -45,6 +49,8 @@ namespace Mastering.NET.Controllers
                 topicLectureViewModels.Add(viewModel);
             }
 
+
+            // Return the updated partial view
             return PartialView("_OffCanvasPartial", topicLectureViewModels);
         }
 
@@ -69,6 +75,8 @@ namespace Mastering.NET.Controllers
 
                 List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
 
+                var topicName = "";
+
                 foreach (var topic in topics)
                 {
                     var correspondingLectures = lectures.Where(l => l.TopId == topic.Id).ToList();
@@ -80,6 +88,11 @@ namespace Mastering.NET.Controllers
                     };
 
                     topicLectureViewModels.Add(viewModel);
+
+                    if (topic.Id==topicId)
+                    {
+                        topicName = topic.TopicName;
+                    }
                 }
 
                 return PartialView("_OffCanvasPartial", topicLectureViewModels);
