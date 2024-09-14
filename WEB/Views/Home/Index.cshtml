@@ -74,12 +74,35 @@
             margin-bottom: 15px;
         }
 
+          .custom-offcanvas-width {
+            width: 25%; /* Set the default width to 25% */
+          }
+
+          /* Adjust for smaller screens */
+          @@media (max-width: 576px) {
+            .custom-offcanvas-width {
+              width: 80%; /* Adjust the width for extra small screens */
+            }
+          }
+
+          @@media (min-width: 577px) and (max-width: 768px) {
+            .custom-offcanvas-width {
+              width: 60%; /* Adjust the width for small screens */
+            }
+          }
+
+          @@media (min-width: 769px) and (max-width: 992px) {
+            .custom-offcanvas-width {
+              width: 40%; /* Adjust the width for medium screens */
+            }
+          }
+
     </style>
 }
 
 <!-- Offcanvas for Tutorials -->
-<div class="offcanvas offcanvas-start w-25" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
-     aria-labelledby="offcanvasWithBothOptionsLabel" style="height: 100vh;">
+<div class="offcanvas offcanvas-start custom-offcanvas-width" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+     aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title text-white fw-bold" id="offcanvasWithBothOptionsLabel">Tutorials</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -99,6 +122,7 @@
         <partial name="_OffCanvasPartial" model="Model" />
     </div>
 </div>
+
 
 
 <!-- Modal for adding new tutorials -->
