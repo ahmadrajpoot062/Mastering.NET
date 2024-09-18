@@ -12,12 +12,14 @@ namespace WEB.Controllers
         private readonly GenericService<Topic> _topicRepository;
         private readonly GenericService<Lecture> _lectureRepository;
         private readonly GenericService<Contact> _contactRepository;
-        public HomeController(ILogger<HomeController> logger, GenericService<Topic> topicRepository, GenericService<Lecture> lectureRepository, GenericService<Contact> contactRepository)
+        private readonly GenericService<Project> _projectRepository;
+        public HomeController(ILogger<HomeController> logger, GenericService<Topic> topicRepository, GenericService<Lecture> lectureRepository, GenericService<Contact> contactRepository, GenericService<Project> projectRepository)
         {
             _topicRepository = topicRepository;
             _lectureRepository = lectureRepository;
             _logger = logger;
             _contactRepository = contactRepository;
+            _projectRepository = projectRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -25,6 +27,11 @@ namespace WEB.Controllers
             List<Topic> topics = await _topicRepository.GetAll();
             List<Lecture> lectures = await _lectureRepository.GetAll();
             List<Contact> contacts = await _contactRepository.GetAll();
+            List<Project> projects = await _projectRepository.GetAll();
+            if (projects==null)
+            {
+                Console.WriteLine("null");
+            }
 
             List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
 
@@ -36,7 +43,8 @@ namespace WEB.Controllers
                 {
                     Topic = topic,
                     Lectures = correspondingLectures,
-                    Contacts = contacts
+                    Contacts = contacts,
+                    Projects= projects                    
                 };
 
                 topicLectureViewModels.Add(viewModel);
@@ -77,6 +85,13 @@ namespace WEB.Controllers
 
             var model = new { FilePath = filePath, FileName = fileName, Extension = extension };
             return View(model);
+        }
+
+        public async Task<IActionResult> viewProjectDetails()
+        {
+            string? id = Request.Query["id"];
+
+            return View(await _projectRepository.GetById(int.Parse(id)));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

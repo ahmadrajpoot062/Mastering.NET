@@ -1,3 +1,11 @@
+
+.card:hover {
+    transform: scale(1.03);
+    /* Increase size by 3% on hover */
+    transition: transform 0.2s ease-in-out;
+    /* Add smooth transition effect */
+}
+
 /*Footer section*/
 #footer {
     box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.2); /* Creates a shadow at the top */
@@ -288,7 +296,7 @@ h6 {
 }
 
 /* Hover effect for Sign Up button */
-.header .btn-signup:hover {
+.btn-signup:hover {
     background-color: #3b5e7d; /* Darker color on hover */
 }
 

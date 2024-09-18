@@ -1,0 +1,150 @@
+﻿@model Core.Entities.Project
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Details - Mastering.NET</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon-16x16.png">
+    <link rel="manifest" href="~/assets/img/site.webmanifest">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+          rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Main CSS File -->
+    <link href="~/assets/css/main.css" rel="stylesheet" />
+
+
+    <style>
+		body {
+			background-image: url(/assets/img/feedback-bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            padding-top: 80px; /* Same as the height of the header */
+        }
+
+        .top {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Ensure fixed dimensions for the carousel */
+        .carousel-inner {
+            width: 100%;
+            height: 350px; /* Set the height you want */
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images fill the container while maintaining aspect ratio */
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Fixed Header Section -->
+    <header id="header" class="shadow header d-flex align-items-center fixed-top" style="height: 80px;">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="/Home/Index" class="d-flex align-items-center me-auto">
+                <img src="~/assets/img/logo.png" style="height:100px;width:100px" alt="">
+                <h1 class="sitename" style="font-size:30px">Mastering .NET</h1>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="container mt-5 mb-5">
+
+        <!-- Project Title -->
+        <div class="row">
+            <div class="h2 fw-bold fst-italic text-center px-2 px-sm-0 shadow py-2"
+                 style="font-family: Verdana, Geneva, Tahoma, sans-serif; color: #549DB4;">
+                @Model.Title
+            </div>
+        </div>
+
+        <!-- Project Carousel and Details -->
+        <div class="row mt-5">
+            <!-- Project Images Carousel -->
+            <div class="col-lg-7">
+                <div id="projectImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < Model.ImageUrls.Split(' ').Length; i++)
+                        {
+                            var imageUrl = Model.ImageUrls.Split(' ')[i];
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="@imageUrl" class="d-block w-100 img-fluid rounded" alt="Project Image">
+                            </div>
+                        }
+                    </div>
+                    <!-- Carousel Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#projectImagesCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#projectImagesCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- Project Description and Details -->
+            <div class="col-lg-5">
+                <div class="card p-4 shadow-sm">
+                    <h4 class="fw-bold" style="color:">Project Description</h4>
+                    <p class="text-muted mt-3">@Model.Description</p>
+
+                    <div class="mt-4">
+                        <a href="@Model.GitHubLink" target="_blank" class="btn" style="background-color: #549DB4; color: white">
+                            <i class="fab fa-github me-2"></i>GitHub Link
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/assets/vendor/aos/aos.js"></script>
+    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+
+</body>
+</html>
+
+
+

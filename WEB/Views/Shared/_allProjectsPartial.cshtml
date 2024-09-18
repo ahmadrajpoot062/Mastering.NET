@@ -1,0 +1,90 @@
+﻿@model List<Core.Entities.Project>
+
+@if (Model == null || !Model.Any())
+{
+    <section>
+        <div class="container text-center">
+            <div class="d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
+                <img src="~/assets/img/noMessageFound.png" class="img-fluid hero-img" alt="">
+                <h3 class="fst-italic fw-bold" style="color:#549DB4">[No Projects yet]<br></h3>
+            </div>
+        </div>
+
+        <div class="container d-flex justify-content-end">
+            @if (User.Identity.Name == "admin231@gmail.com")
+            {
+                <button type="button" class="fw-bold btn rounded-pill shadow px-4 py-2"
+                        style="background-color: #549DB4; color: white; border: none;"
+                        data-bs-toggle="modal" data-bs-target="#addProjectModal" data-aos="fade-up" data-aos-delay="100">
+                    Add Project
+                </button>
+            }
+        </div>
+    </section>
+}
+else
+{
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3 mb-5">
+            @foreach (var project in Model)
+            {
+                var imageUrls = project.ImageUrls.Split(' '); // Splitting the space-separated URLs
+                var descriptionWords = project.Description?.Split(' ') ?? new string[0]; // Splitting description into words
+                var truncatedDescription = string.Join(' ', descriptionWords.Take(30)) + (descriptionWords.Length > 50 ? " ......" : ""); // Truncate if more than 50 words
+
+                <div class="col">
+                    <div class="card h-100 border-3 p-1 shadow" style="border-color: #549DB4;" data-aos="fade-up" data-aos-delay="200">
+                        <a href="/Home/viewProjectDetails?id=@project.Id">
+                            <img src="@imageUrls[0]" class="card-img-top" alt="Project image">
+                        </a>
+
+                        <!-- Line under the image -->
+                        <div style="border-top: 3px solid #549DB4; margin-top: 4px;"></div>
+
+                        <div class="card-body">
+                            <h4 class="card-title fwt-bold fst-italic">
+                                @project.Title
+                            </h4>
+                            <p class="card-text text-secondary">@truncatedDescription</p>
+                        </div>
+
+                        @if (User.Identity.Name == "admin231@gmail.com")
+                        {
+                            <!-- Footer with space between View Details and Delete icon -->
+                            <div class="card-footer d-flex justify-content-between">
+                                <!-- View Details button -->
+                                <a type="button" class="btn text-white" style="background-color: #388DA8;" href="/Home/viewProjectDetails?id=@project.Id">
+                                    <i class="fa fa-solid fa-book me-1 text-white"></i>View Details
+                                </a>
+                                <!-- Delete button with red trash icon -->
+                                <a type="button" class="btn text-danger" data-bs-toggle="modal" data-bs-target="#SureModal" data-id="@project.Id" data-title="@project.Title">
+                                    <i class="fa fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-footer">
+                                <a type="button" class="btn text-white" style="background-color: #388DA8;" href="/Home/viewProjectDetails?id=@project.Id">
+                                    <i class="fa fa-solid fa-book me-1 text-white"></i>View Details
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Icon for adding new projects -->
+    <div class="container d-flex justify-content-end">
+        @if (User.Identity.Name == "admin231@gmail.com")
+        {
+            <button type="button" class="fw-bold btn rounded-pill shadow px-4 py-2"
+                    style="background-color: #549DB4; color: white; border: none;"
+                    data-bs-toggle="modal" data-bs-target="#addProjectModal" data-aos="fade-up" data-aos-delay="100">
+                Add Project
+            </button>
+        }
+    </div>
+}

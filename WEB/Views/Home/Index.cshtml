@@ -245,6 +245,82 @@
         </div>
 
     </section><!-- /Hero Section -->
+
+
+    <!-- Modal for adding new Projects -->
+    <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProjectModalLabel">Add New Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProjectForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="projectTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="projectTitle" name="projectTitle" placeholder="Enter project title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="projectDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="projectDescription" name="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gitHubLink" class="form-label">Link</label>
+                            <input type="url" class="form-control" id="gitHubLink" name="gitHubLink" placeholder="Enter GitHub link" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="projectImages" class="form-label">Upload Project Images</label>
+                            <input type="file" class="form-control" id="projectImages" name="projectImages" accept="image/*" multiple required>
+                            <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" onclick="addProject();" class="btn text-white w-50 mt-4" style="background-color: #559DB4;">
+                                Add Project
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sure Modal for deleting Project -->
+    <div class="modal fade" id="SureModal" tabindex="-1" aria-labelledby="SureModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="SureModalLabel">Are you sure?</h1>
+                </div>
+                <div class="modal-body">
+                    <!-- This paragraph will be updated dynamically -->
+                    <p class="mb-4">Do you want to delete the project <strong id="modalProjectTitle"></strong>?</p>
+                    <!-- Call deleteProject when clicking Yes -->
+                    <button id="confirmDeleteBtn" class="btn btn-primary text-white border w-25">Yes</button>
+                    <button type="button" class="btn btn-danger text-white w-25" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Projects Section-->
+
+    <!-- Section Title -->
+    <div class="container section-title mt-5" data-aos="fade-up">
+        <h2>.NET Applications</h2>
+        <p>Explore some of the top .NET application projects created by our students, designed to help you grasp various concepts in .NET development.</p>
+        <p>These projects serve as valuable resources to aid your learning and deepen your understanding of .NET technologies.</p>
+    </div><!-- End Section Title -->
+
+
+    <div id="allProjectsDiv">
+        <partial name="_allProjectsPartial" model="Model.FirstOrDefault()?.Projects" />  
+    </div>
+
+    <!--Projects Section-->
+
+
     <!-- About Section -->
     <section id="about" class="about section">
 
@@ -333,6 +409,7 @@
 
         </div>
     </section><!-- /About Section -->
+
     <!-- Contact Section -->
     <section id="contact" class="contact section mt-2">
 
@@ -604,5 +681,79 @@
         });
 
     </script>
+
+    <script>
+        function addProject() {
+            // Create FormData object to collect form data, including files
+            var formData = new FormData(document.getElementById("addProjectForm"));
+            
+            $.ajax({
+                url: '/Admin/AddProject', // URL of the action method
+                type: 'POST',
+                data: formData,
+                contentType: false, // Required for file upload
+                processData: false, // Prevent jQuery from processing the data
+                success: function (response) {
+                    // Success callback - replace the content of #allProjectsDiv
+                    $("#allProjectsDiv").html(response); // Replace partial view with new content
+
+                    // Optionally, close the modal after success
+                    $('#addProjectModal').modal('hide');
+
+                    // Clear the form
+                    $('#addProjectForm')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    // Error handling
+                    console.log("Error: " + error);
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        // When the modal is about to be shown
+        var sureModal = document.getElementById('SureModal');
+        sureModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget;
+
+            // Extract info from data-* attributes
+            var projectId = button.getAttribute('data-id');
+            var projectTitle = button.getAttribute('data-title');
+
+            // Update the modal's content with the project title
+            var modalTitleElement = sureModal.querySelector('#modalProjectTitle');
+            modalTitleElement.textContent = projectTitle;
+
+            // Dynamically set the deleteProject function for the Yes button
+            var confirmDeleteButton = sureModal.querySelector('#confirmDeleteBtn');
+            confirmDeleteButton.onclick = function () {
+                deleteProject(projectId); // Call deleteProject with the correct project ID
+            };
+        });
+    </script>
+
+    <script>
+        function deleteProject(projectId) {
+            
+            $.ajax({
+                url: '/Admin/DeleteProject',
+                type: 'POST',
+                data: { id: projectId },
+                success: function (result) {
+                    $("#allProjectsDiv").html(result); // Replace partial view with new content
+
+                    // // Optionally, close the modal after success
+                    $('#SureModal').modal('hide');
+                },
+                error: function () {
+                    alert('An error occurred while deleting the project');
+                }
+            });
+        }
+    </script>
+
 
 }

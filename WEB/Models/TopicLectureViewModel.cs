@@ -7,5 +7,6 @@ namespace Mastering.NET.Models
         public Topic Topic { get; set; }
         public List<Lecture> Lectures { get; set; }
         public List<Contact> Contacts { get; set; }
+        public List<Project> Projects { get; set; }
     }
 }
