@@ -21,36 +21,86 @@ namespace WEB.Controllers
             _contactRepository = contactRepository;
             _projectRepository = projectRepository;
         }
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int topicPage = 1, int projectPage = 1, int pageSize = 6)
         {
+            // Fetch all topics, contacts, and projects from the repositories
             List<Topic> topics = await _topicRepository.GetAll();
-            List<Lecture> lectures = await _lectureRepository.GetAll();
             List<Contact> contacts = await _contactRepository.GetAll();
             List<Project> projects = await _projectRepository.GetAll();
-            if (projects==null)
+
+            // Pagination logic for Topics
+            int totalTopics = topics.Count();
+            int totalTopicPages = (int)Math.Ceiling(totalTopics / (double)pageSize);
+            List<Topic> paginatedTopics = topics.Skip((topicPage - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pagination logic for Projects
+            int totalProjects = projects.Count();
+            int totalProjectPages = (int)Math.Ceiling(totalProjects / (double)pageSize);
+            List<Project> paginatedProjects = projects.Skip((projectPage - 1) * pageSize).Take(pageSize).ToList();
+
+            // Create and populate the ViewModel
+            TCPViewModel tcp = new TCPViewModel
             {
-                Console.WriteLine("null");
-            }
+                Topic = topics,  // Original list of topics
+                PaginatedTopics = paginatedTopics, // Paginated topics
+                Contacts = contacts, // Contacts
+                PaginatedProjects = paginatedProjects // Paginated projects
+            };
 
-            List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
+            // Set ViewBag properties for pagination
+            ViewBag.CurrentPage = topicPage;
+            ViewBag.TotalPages = totalTopicPages;
 
-            foreach (var topic in topics)
-            {
-                var correspondingLectures = lectures.Where(l => l.TopId == topic.Id).ToList();
+            ViewBag.CurrentProjectPage = projectPage;
+            ViewBag.TotalProjectPages = totalProjectPages;
 
-                TopicLectureViewModel viewModel = new TopicLectureViewModel
-                {
-                    Topic = topic,
-                    Lectures = correspondingLectures,
-                    Contacts = contacts,
-                    Projects= projects                    
-                };
-
-                topicLectureViewModels.Add(viewModel);
-            }
-            return View(topicLectureViewModels);
+            return View(tcp);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> topicsPartialViewUpdate(int page = 1, int pageSize = 6)
+        {
+            // Retrieve all topics
+            List<Topic> topics = await _topicRepository.GetAll();
+
+            // Pagination logic
+            int totalTopics = topics.Count();
+            int totalPages = (int)Math.Ceiling(totalTopics / (double)pageSize);
+            List<Topic> paginatedTopics = topics.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass pagination info to ViewBag
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            // Return the updated partial view with paginated topics
+            return PartialView("_allTopicsPartial", paginatedTopics);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProjectsPartialViewUpdate(int page = 1, int pageSize = 6)
+        {
+            List<Project> projects = await _projectRepository.GetAll();
+
+            int totalprojects = projects.Count();
+            int totalPages = (int)Math.Ceiling(totalprojects / (double)pageSize);
+            List<Project> paginatedProjects = projects.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass pagination info to ViewBag
+            ViewBag.CurrentProjectPage = page;
+            ViewBag.TotalProjectPages = totalPages;
+
+            return PartialView("_allProjectsPartial", paginatedProjects);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> topicNavBarUpdate()
+        {
+            List<Topic> topics = await _topicRepository.GetAll();
+
+            // Return the updated partial view
+            return PartialView("_topicsNavBarPartial", topics);
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -93,6 +143,31 @@ namespace WEB.Controllers
 
             return View(await _projectRepository.GetById(int.Parse(id)));
         }
+
+        public async Task<IActionResult> Topic(int id, string topicName)
+        {
+            // Fetch all lectures and filter them by the topic ID (TopId)
+            List<Lecture> lectures = await _lectureRepository.GetAll();
+            var filteredLectures = lectures.Where(lecture => lecture.TopId == id).ToList();
+
+            ViewBag.TopicName = topicName;
+            ViewBag.TopicId = id;
+
+            // Pass the filtered lectures to the view
+            return View(filteredLectures);
+        }
+
+        public async Task<IActionResult> loadLectureName(int id)
+        {
+            Lecture lecture = await _lectureRepository.GetById(id);
+            return PartialView("_lectureNamePartial", lecture.LectureTitle);
+        }
+        public async Task<string> loadLecture(int id)
+        {
+            Lecture lecture = await _lectureRepository.GetById(id);
+            return lecture.htmlcontent;
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

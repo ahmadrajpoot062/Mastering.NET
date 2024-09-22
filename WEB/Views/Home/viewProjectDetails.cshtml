@@ -63,14 +63,31 @@
 </head>
 <body>
     <!-- Fixed Header Section -->
-    <header id="header" class="shadow header d-flex align-items-center fixed-top" style="height: 80px;">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center">
-            <a href="/Home/Index" class="d-flex align-items-center me-auto">
-                <img src="~/assets/img/logo.png" style="height:100px;width:100px" alt="">
-                <h1 class="sitename" style="font-size:30px">Mastering .NET</h1>
-            </a>
+    <div class="fixed-top-custom">
+        <header id="header" class="header d-flex align-items-center" style="height: 70px;">
+            <div class="container-fluid container-xl position-relative d-flex align-items-center">
+                <a href="/Home/Index" class="logo d-flex align-items-center me-auto">
+                    <img src="~/assets/img/logo.png" alt="">
+                    <h1 class="sitename">Mastering .NET</h1>
+                </a>
+
+                <nav id="navmenu" class="navmenu me-5">
+                    <ul>
+                        <li><a href="/Home/Index#hero" class="active">Home<i class="bi bi-house fs-5"></i></a></li>
+                        <li><a href="/Home/Index#about">About<i class="bi bi-info-circle fs-5"></i></a></li>
+                        <li><a href="/Home/Index#contact" class="me-3">Contact<i class="bi bi-telephone fs-5"></i></a></li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+                <partial name="_LoginPartial" />
+            </div>
+        </header>
+
+        <!-- Secondary navbar for topics -->
+        <div id="topic-wrapper">
+            <partial name="_topicsNavBarPartial" model="await _topicRepository.GetAll()" />
         </div>
-    </header>
+    </div>
 
     <!-- Main Content Section -->
     <div class="container mt-5 mb-5">
@@ -142,6 +159,48 @@
 
     <!-- Main JS File -->
     <script src="~/assets/js/main.js"></script>
+
+    <script>
+        // Detect content overflow and toggle arrow visibility
+        function checkOverflow() {
+            const container = document.getElementById('topic-container');
+            const scrollLeft = document.getElementById('scroll-left');
+            const scrollRight = document.getElementById('scroll-right');
+
+            // Check if the container content overflows horizontally
+            if (container.scrollWidth > container.clientWidth) {
+                scrollLeft.style.display = 'flex'; // Show the left arrow if overflow occurs
+                scrollRight.style.display = 'flex'; // Show the right arrow if overflow occurs
+            } else {
+                scrollLeft.style.display = 'none'; // Hide the left arrow if no overflow
+                scrollRight.style.display = 'none'; // Hide the right arrow if no overflow
+            }
+        }
+
+        // Scroll the topics when the arrows are clicked
+        document.getElementById('scroll-left').addEventListener('click', function () {
+            const container = document.getElementById('topic-container');
+            container.scrollBy({
+                left: -200, // Scroll left by 200px (adjust as needed)
+                behavior: 'smooth'
+            });
+        });
+
+        document.getElementById('scroll-right').addEventListener('click', function () {
+            const container = document.getElementById('topic-container');
+            container.scrollBy({
+                left: 200, // Scroll right by 200px (adjust as needed)
+                behavior: 'smooth'
+            });
+        });
+
+        // Run the overflow check on page load and on window resize
+        window.onload = checkOverflow;
+        window.onresize = checkOverflow;
+
+    </script>
+
+
 
 </body>
 </html>

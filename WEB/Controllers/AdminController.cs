@@ -31,76 +31,30 @@ namespace Mastering.NET.Controllers
             Topic t = new Topic { TopicName = tutorialName };
             await _topicRepository.Add(t);
 
-            // Get the updated list of topics and lectures
+            // Get the updated list of topics
             List<Topic> topics = await _topicRepository.GetAll();
-            List<Lecture> lectures = await _lectureRepository.GetAll();
-
-            // Create the list of TopicLectureViewModel to pass to the view
-            List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
-
-            foreach (var topic in topics)
-            {
-                var correspondingLectures = lectures.Where(l => l.TopId == topic.Id).ToList();
-
-                TopicLectureViewModel viewModel = new TopicLectureViewModel
-                {
-                    Topic = topic,
-                    Lectures = correspondingLectures
-                };
-
-                topicLectureViewModels.Add(viewModel);
-            }
-
 
             // Return the updated partial view
-            return PartialView("_OffCanvasPartial", topicLectureViewModels);
+            return PartialView("_OffCanvasPartial", topics);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadTutorial(string fileName, IFormFile fileUpload, int topicId)
+        public async Task<IActionResult> UploadLecture(string title, string content, int topicId)
         {
-            if (fileUpload != null && fileUpload.Length > 0)
+            Lecture lecture = new Lecture
             {
-                string filePath = getFilePath(fileUpload); 
+                LectureTitle = title,
+                htmlcontent = content,
+                TopId = topicId
+            };
 
-                Lecture lecture = new Lecture
-                {
-                    LectureTitle = fileName,
-                    FilePath = filePath,
-                    TopId = topicId
-                };
+            await _lectureRepository.Add(lecture);
 
-                await _lectureRepository.Add(lecture);
+            List<Lecture> lectures = await _lectureRepository.GetAll();
+            var filteredLectures = lectures.Where(lecture => lecture.TopId == topicId).ToList();
 
-                List<Topic> topics = await _topicRepository.GetAll();
-                List<Lecture> lectures = await _lectureRepository.GetAll();
-
-                List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
-
-                var topicName = "";
-
-                foreach (var topic in topics)
-                {
-                    var correspondingLectures = lectures.Where(l => l.TopId == topic.Id).ToList();
-
-                    TopicLectureViewModel viewModel = new TopicLectureViewModel
-                    {
-                        Topic = topic,
-                        Lectures = correspondingLectures
-                    };
-
-                    topicLectureViewModels.Add(viewModel);
-
-                    if (topic.Id==topicId)
-                    {
-                        topicName = topic.TopicName;
-                    }
-                }
-
-                return PartialView("_OffCanvasPartial", topicLectureViewModels);
-            }
-
-            return BadRequest("Invalid file upload.");
+            return PartialView("_leftNavPartial", filteredLectures);
+            
         }
 
         public string getFilePath(IFormFile myFile)
@@ -124,31 +78,16 @@ namespace Mastering.NET.Controllers
             }
             return string.Empty;
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> DeleteLecture(int id)
+        public async Task<IActionResult> DeleteLecture(int id, int topicid)
         {
-            await _lectureRepository.Delete(id); 
+            await _lectureRepository.Delete(id);
 
-            List<Topic> topics = await _topicRepository.GetAll();
             List<Lecture> lectures = await _lectureRepository.GetAll();
+            var filteredLectures = lectures.Where(lecture => lecture.TopId == topicid).ToList();
 
-            List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
-
-            foreach (var topic in topics)
-            {
-                var correspondingLectures = lectures.Where(l => l.TopId == topic.Id).ToList();
-
-                TopicLectureViewModel viewModel = new TopicLectureViewModel
-                {
-                    Topic = topic,
-                    Lectures = correspondingLectures
-                };
-
-                topicLectureViewModels.Add(viewModel);
-            }
-
-            return PartialView("_OffCanvasPartial", topicLectureViewModels);
+            return PartialView("_leftNavPartial", filteredLectures);
         }
 
         [HttpPost]
@@ -157,32 +96,16 @@ namespace Mastering.NET.Controllers
             await _topicRepository.Delete(id);
 
             List<Topic> topics = await _topicRepository.GetAll();
-            List<Lecture> lectures = await _lectureRepository.GetAll();
 
-            List<TopicLectureViewModel> topicLectureViewModels = new List<TopicLectureViewModel>();
-
-            foreach (var topic in topics)
-            {
-                var correspondingLectures = lectures.Where(l => l.TopId == topic.Id).ToList();
-
-                TopicLectureViewModel viewModel = new TopicLectureViewModel
-                {
-                    Topic = topic,
-                    Lectures = correspondingLectures
-                };
-
-                topicLectureViewModels.Add(viewModel);
-            }
-
-            return PartialView("_OffCanvasPartial", topicLectureViewModels);
+            return PartialView("_OffCanvasPartial", topics);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProject(string projectTitle, string projectDescription, string gitHubLink, List<IFormFile> projectImages)
+        public async Task AddProject(string projectTitle, string projectDescription, string gitHubLink, List<IFormFile> projectImages)
         {
             if (string.IsNullOrEmpty(projectTitle) || string.IsNullOrEmpty(projectDescription) || string.IsNullOrEmpty(gitHubLink))
             {
-                return BadRequest("Invalid project data.");
+                BadRequest("Invalid project data.");
             }
 
             // Process the images - store them and generate URLs
@@ -218,17 +141,12 @@ namespace Mastering.NET.Controllers
             };
 
             await _projectRepository.Add(newProject);
-
-            var allProjects = await _projectRepository.GetAll(); 
-            return PartialView("_allProjectsPartial", allProjects);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteProject(int id)
+        public async Task DeleteProject(int id)
         {
-            await _projectRepository.Delete(id);           
-            var allProjects = await _projectRepository.GetAll();
-            return PartialView("_allProjectsPartial", allProjects);
+            await _projectRepository.Delete(id);  
         }
 
 

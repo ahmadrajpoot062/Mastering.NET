@@ -1,9 +1,105 @@
+/* Fixed top header */
+.fixed-top-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+#topic-wrapper {
+    position: relative;
+    width: 100%;
+    height: 35px; /* Height of the navbar */
+    background-color: #388DA8;
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Hide overflow to avoid scrollbars */
+}
+
+.scroll-arrow {
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    display: none; /* Hidden by default, shown only when needed */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #3B5E7D; /* Solid background color */
+    color: white; /* Arrow icon color */
+    z-index: 1000;
+    font-size: 1.5rem; /* Adjust size of the icon if needed */
+}
+
+#scroll-left {
+    left: 0;
+}
+
+#scroll-right {
+    right: 0;
+}
+
+#topic-container {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding: 5px 40px; /* Space for the arrows */
+    scroll-behavior: smooth;
+    height: 100%; /* Match height to the parent container */
+}
+
+    #topic-container ul {
+        display: flex;
+        align-items: center;
+        height: 100%; /* Ensure the ul height matches the navbar height */
+        margin: 0;
+        padding: 0;
+        list-style: none; /* Remove bullet points */
+    }
+
+    #topic-container li {
+        display: flex;
+        align-items: center;
+        margin: 0 5px;
+        padding: 0;
+        height: 100%; /* Ensure li height matches the navbar height */
+    }
+
+        #topic-container li a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            background-color: #4da2b3;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%; /* Ensure the link takes full height of the li */
+        }
+
+            #topic-container li a:hover {
+                background-color: #336d83;
+            }
+
+.selected-topic {
+    background-color: #336d83;
+}
 
 .card:hover {
     transform: scale(1.03);
     /* Increase size by 3% on hover */
     transition: transform 0.2s ease-in-out;
     /* Add smooth transition effect */
+}
+
+.card a:hover {
+    background-color: #549DB4;
+    color: white;
 }
 
 /*Footer section*/
@@ -217,13 +313,13 @@ h6 {
     }
 
     .header .logo h1 {
-        display:none;
+        display: none;
     }
 }
 
 @media (max-width: 448px) {
     .header .logo img {
-        display:none;
+        display: none;
     }
 
     .header .logo h1 {
@@ -248,7 +344,7 @@ h6 {
 }
 
 .navmenu a {
-    font-size:small !important;
+    font-size: small !important;
     text-decoration: none;
     color: #000; /* Default text color */
     font-weight: 500;

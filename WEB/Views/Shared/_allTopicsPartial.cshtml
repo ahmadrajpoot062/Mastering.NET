@@ -1,0 +1,88 @@
+﻿@model List<Core.Entities.Topic>
+
+@if (Model == null || !Model.Any())
+{
+    <section>
+        <div class="container text-center">
+            <div class="d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
+                <img src="~/assets/img/noMessageFound.png" class="img-fluid hero-img" alt="">
+                <h3 class="fst-italic fw-bold" style="color:#549DB4">[No Topics yet]<br></h3>
+            </div>
+        </div>
+
+        <div class="container d-flex justify-content-end">
+            @if (User.Identity.Name == "admin231@gmail.com")
+            {
+                <button type="button" class="fw-bold btn rounded-pill shadow px-4 py-2"
+                        style="background-color: #549DB4; color: white; border: none;"
+                        data-bs-toggle="modal" data-bs-target="#addTutorialModal" data-aos="fade-up" data-aos-delay="100" data-current-page="@ViewBag.CurrentPage">
+                    Add Topic
+                </button>
+            }
+        </div>
+    </section>
+}
+else
+{
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+            @foreach (var topic in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border-3 p-1 shadow " style="border-color: #549DB4;" data-aos="fade-up" data-aos-delay="200">
+                        <a href="@Url.Action("Topic", "Home", new { id = topic.Id , topicName = topic.TopicName})" class="card-body d-flex justify-content-center align-items-center text-center">
+                            <p class="card-title fwt-bold text-decoration-none" style="display: inline-block; max-width: 100%;">
+                                @topic.TopicName
+                            </p>
+                        </a>
+
+                        @if (User.Identity.Name == "admin231@gmail.com")
+                        {
+                            <div class="card-footer d-flex justify-content-center">
+                                <i class="bi bi-trash delete-tutorial-icon text-danger" data-tutorial-id="@topic.Id" data-current-page="@ViewBag.CurrentPage" data-bs-toggle="modal" data-bs-target="#confirmDeleteTutorialModal" data-topicCount="@Model.Count()" title="Delete" style="cursor: pointer;"></i>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <!-- Pagination Links -->
+        <div class="container d-flex justify-content-center">
+            <nav>
+                <ul class="pagination">
+                    @for (var i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")" data-aos="fade-up" data-aos-delay="200">
+                            <a class="page-link"
+                               href="javascript:void(0);"
+                               onclick="loadPage(@i)"
+                               style="background-color: @(i == ViewBag.CurrentPage ? "#388DA8" : "transparent");
+                              border-color: #3B5E7D;
+                              color: @(i == ViewBag.CurrentPage ? "white" : "#3B5E7D");">
+                                @i
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Icon for adding new projects -->
+    <div class="container d-flex justify-content-end">
+        @if (User.Identity.Name == "admin231@gmail.com")
+        {
+            <button type="button" class="fw-bold btn rounded-pill shadow px-4 py-2"
+                    style="background-color: #549DB4; color: white; border: none;"
+                    data-bs-toggle="modal" data-bs-target="#addTutorialModal" data-aos="fade-up" data-aos-delay="100" data-current-page="@ViewBag.CurrentPage">
+              
+                    Add Topic
+            </button>
+        }
+    </div>
+}
+
+

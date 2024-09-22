@@ -1,6 +1,7 @@
 ﻿using Mastering.NET.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Core.Entities;
 
 namespace Mastering.NET.Data
 {
@@ -10,5 +11,6 @@ namespace Mastering.NET.Data
             : base(options)
         {
         }
+        public DbSet<Core.Entities.Lecture> Lecture { get; set; } = default!;
     }
 }

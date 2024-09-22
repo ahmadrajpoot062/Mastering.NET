@@ -15,7 +15,7 @@
             {
                 <button type="button" class="fw-bold btn rounded-pill shadow px-4 py-2"
                         style="background-color: #549DB4; color: white; border: none;"
-                        data-bs-toggle="modal" data-bs-target="#addProjectModal" data-aos="fade-up" data-aos-delay="100">
+                        data-bs-toggle="modal" data-bs-target="#addProjectModal" data-aos="fade-up" data-aos-delay="100" data-currentProject-page="@ViewBag.CurrentProjectPage">
                     Add Project
                 </button>
             }
@@ -25,7 +25,7 @@
 else
 {
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3 mb-5">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
             @foreach (var project in Model)
             {
                 var imageUrls = project.ImageUrls.Split(' '); // Splitting the space-separated URLs
@@ -57,7 +57,7 @@ else
                                     <i class="fa fa-solid fa-book me-1 text-white"></i>View Details
                                 </a>
                                 <!-- Delete button with red trash icon -->
-                                <a type="button" class="btn text-danger" data-bs-toggle="modal" data-bs-target="#SureModal" data-id="@project.Id" data-title="@project.Title">
+                                <a type="button" class="btn text-danger" data-bs-toggle="modal" data-bs-target="#SureModal" data-id="@project.Id" data-title="@project.Title" data-currentProject-page="@ViewBag.CurrentProjectPage" data-ProjectCount="@Model.Count()">
                                     <i class="fa fa-solid fa-trash"></i>
                                 </a>
                             </div>
@@ -74,6 +74,28 @@ else
                 </div>
             }
         </div>
+
+        <!-- Pagination Links -->
+        <div class="container d-flex justify-content-center">
+            <nav>
+                <ul class="pagination">
+                    @for (var i = 1; i <= ViewBag.TotalProjectPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentProjectPage ? "active" : "")" data-aos="fade-up" data-aos-delay="200">
+                            <a class="page-link"
+                               href="javascript:void(0);"
+                               onclick="loadProjectPage(@i)"
+                               style="background-color: @(i == ViewBag.CurrentProjectPage ? "#388DA8" : "transparent");
+                              border-color: #3B5E7D;
+                              color: @(i == ViewBag.CurrentProjectPage ? "white" : "#3B5E7D");">
+                                @i
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+
     </div>
 
     <!-- Icon for adding new projects -->
@@ -82,7 +104,7 @@ else
         {
             <button type="button" class="fw-bold btn rounded-pill shadow px-4 py-2"
                     style="background-color: #549DB4; color: white; border: none;"
-                    data-bs-toggle="modal" data-bs-target="#addProjectModal" data-aos="fade-up" data-aos-delay="100">
+                    data-bs-toggle="modal" data-bs-target="#addProjectModal" data-aos="fade-up" data-aos-delay="100" data-currentProject-page="@ViewBag.CurrentProjectPage">
                 Add Project
             </button>
         }

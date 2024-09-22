@@ -11,8 +11,9 @@ namespace Core.Entities
     {
         public int Id { get; set; }
         public string LectureTitle { get; set; }
-        public IFormFile File { get; set; }
-        public string FilePath { get; set; }
+        //public IFormFile File { get; set; }
+        //public string FilePath { get; set; }
+        public string htmlcontent { get; set; }
         public int TopId { get; set; }
 
     }

@@ -1,0 +1,27 @@
+﻿@model List<Core.Entities.Topic>
+
+
+<!-- Left Arrow Icon -->
+<div id="scroll-left" class="scroll-arrow">
+    <i class="fa fa-arrow-circle-left"></i>
+</div>
+
+<!-- Container for the actual topics -->
+<div id="topic-container" class="bg-secondary">
+    <ul>
+        @foreach (var topic in Model)
+        {
+            <li>
+                <a href="@Url.Action("Topic", "Home", new { id = topic.Id , topicName = topic.TopicName})" class="text-white px-3 py-1
+                           @(ViewData["Title"]?.ToString() == topic.TopicName ? "selected-topic" : "")">
+                    @topic.TopicName
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Right Arrow Icon -->
+<div id="scroll-right" class="scroll-arrow">
+    <i class="fa fa-arrow-circle-right"></i>
+</div>

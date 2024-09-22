@@ -1,25 +1,22 @@
 ﻿@using System.Linq
-@model List<TopicLectureViewModel>
+@model List<Core.Entities.Topic>
 
 <div class="offcanvas-body">
     <!-- Professional looking dropdown menu for Tutorials -->
     <ul class="list-group list-group-flush">
         @foreach (var tutorial in Model)
         {
-            <li class="list-group-item dropdown">
-                <div class="d-flex align-items-start">
-                    <i class="bi bi-arrow-right-circle bullet-icon"></i>
-                    <a href="#" class="dropdown-toggle text-wrap ms-2" data-bs-toggle="collapse"
-                       data-bs-target="#@tutorial.Topic.Id">
-                        @tutorial.Topic.TopicName                        
-                    </a>
-                    @if (User.Identity.Name == "admin231@gmail.com")
-                    {
-                        <i class="bi bi-trash delete-tutorial-icon text-danger" data-tutorial-id="@tutorial.Topic.Id" data-bs-toggle="modal" data-bs-target="#confirmDeleteTutorialModal"
-                           title="Delete" style="cursor: pointer;"></i>
-                    }
-                </div>
-                <ul id="@tutorial.Topic.Id" class="collapse list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-start">
+                <i class="bi bi-arrow-right-circle bullet-icon"></i>
+                <a href="@Url.Action("Topic", "Home", new { id = tutorial.Id , topicName = tutorial.TopicName})" class="text-wrap ms-2">
+                    @tutorial.TopicName                        
+                </a>
+                @if (User.Identity.Name == "admin231@gmail.com")
+                {
+                    <i class="bi bi-trash delete-tutorial-icon text-danger" data-tutorial-id="@tutorial.Id" data-current-page="@ViewBag.CurrentPage" data-bs-toggle="modal" data-bs-target="#confirmDeleteTutorialModal"
+                        title="Delete" style="cursor: pointer;"></i>
+                }
+               @*  <ul id="@tutorial.Id" class="collapse list-group list-group-flush">
                     @if (User.Identity.Name == "admin231@gmail.com")
                     {
                         <!-- Admin can upload tutorial notes -->
@@ -61,7 +58,7 @@
                         }
                     }
 
-                </ul>
+                </ul> *@
 
             </li>
         }
