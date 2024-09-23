@@ -46,37 +46,37 @@
 			background-image: url(/assets/img/feedback-bg.jpg);
             background-size: cover;
             background-repeat: no-repeat;
-            padding-top: 80px; /* Same as the height of the header */
+            padding-top: 80px; 
         }
 
         .no-hover:hover,
         .no-hover:focus {
             text-decoration: none;
-            color: #549DB4; /* Keeps the color the same */
-            background-color: transparent; /* Keeps the background color unchanged */            
+            color: #549DB4;
+            background-color: transparent;
         }
-
 
         .top {
             color: #fff;
             text-decoration: underline;
         }
 
-        /* Ensure fixed dimensions for the carousel */
         .carousel-inner {
             width: 100%;
-            height: 350px; /* Set the height you want */
+            height: 350px; 
         }
 
         .carousel-inner img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures images fill the container while maintaining aspect ratio */
+            object-fit: cover; 
         }
     </style>
 
 </head>
+
 <body>
+
     <!-- Fixed Header Section -->
     <div class="fixed-top-custom">
         <header id="header" class="header d-flex align-items-center" style="height: 70px;">
@@ -85,7 +85,6 @@
                     <img src="~/assets/img/logo.png" alt="">
                     <h1 class="sitename">Mastering .NET</h1>
                 </a>
-
                 <nav id="navmenu" class="navmenu me-5">
                     <ul>
                         <li><a href="/Home/Index#hero" class="active">Home<i class="bi bi-house fs-5"></i></a></li>
@@ -104,9 +103,10 @@
         </div>
     </div>
 
+
+
     <!-- Main Content Section -->
     <div class="container mt-5 mb-5">
-
         <!-- Project Title -->
         <div class="row">
             <div class="h2 fw-bold fst-italic text-center px-2 px-sm-0 shadow py-2 mt-5"
@@ -117,7 +117,6 @@
 
         <!-- Project Carousel and Details -->
         <div class="row mt-5">
-            <!-- Project Images Carousel -->
             <div class="col-lg-7">
                 
                 <div id="projectImagesCarousel" class="carousel slide mb-4 " data-bs-ride="carousel" data-aos="fade-up" data-aos-delay="100">
@@ -161,9 +160,8 @@
                         </a>
                     </div>
                 }
-
-
             </div>
+
 
             <!-- Image Modal -->
             <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -275,8 +273,9 @@
     <!-- Main JS File -->
     <script src="~/assets/js/main.js"></script>
 
+
+    @* Detect content overflow and toggle arrow visibility *@
     <script>
-        // Detect content overflow and toggle arrow visibility
         function checkOverflow() {
             const container = document.getElementById('topic-container');
             const scrollLeft = document.getElementById('scroll-left');
@@ -284,11 +283,11 @@
 
             // Check if the container content overflows horizontally
             if (container.scrollWidth > container.clientWidth) {
-                scrollLeft.style.display = 'flex'; // Show the left arrow if overflow occurs
-                scrollRight.style.display = 'flex'; // Show the right arrow if overflow occurs
+                scrollLeft.style.display = 'flex';
+                scrollRight.style.display = 'flex';
             } else {
-                scrollLeft.style.display = 'none'; // Hide the left arrow if no overflow
-                scrollRight.style.display = 'none'; // Hide the right arrow if no overflow
+                scrollLeft.style.display = 'none';
+                scrollRight.style.display = 'none';
             }
         }
 
@@ -296,7 +295,7 @@
         document.getElementById('scroll-left').addEventListener('click', function () {
             const container = document.getElementById('topic-container');
             container.scrollBy({
-                left: -200, // Scroll left by 200px (adjust as needed)
+                left: -200, // Scroll left by 200px
                 behavior: 'smooth'
             });
         });
@@ -304,7 +303,7 @@
         document.getElementById('scroll-right').addEventListener('click', function () {
             const container = document.getElementById('topic-container');
             container.scrollBy({
-                left: 200, // Scroll right by 200px (adjust as needed)
+                left: 200, // Scroll right by 200px
                 behavior: 'smooth'
             });
         });
@@ -312,22 +311,25 @@
         // Run the overflow check on page load and on window resize
         window.onload = checkOverflow;
         window.onresize = checkOverflow;
-
     </script>
+
 
     <script>
         $(document).ready(function () {
             $('#projectImagesCarousel img').on('click', function () {
                 var index = $(this).closest('.carousel-item').index();
-                $('#projectImagesCarousel').carousel(index); // Jump to the clicked image in carousel
-                $('#imageModal').modal('show'); // Show the modal
-                $('#modalImage').attr('src', $(this).attr('src')); // Set the modal image source
+                $('#projectImagesCarousel').carousel(index); 
+                $('#imageModal').modal('show');
+                $('#modalImage').attr('src', $(this).attr('src')); 
             });
         });
     </script>
 
+
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- SignalR -->
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/signalr.js"></script>
 

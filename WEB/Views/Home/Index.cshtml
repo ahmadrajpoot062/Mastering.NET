@@ -5,6 +5,7 @@
 @model TCPViewModel
 
 @section Styles {
+
     <style>
         .offcanvas-header {
             display: flex;
@@ -28,31 +29,27 @@
             color: #388DA8;
         }
 
-            .add-tutorial-icon:hover,
-            .upload-pdf-icon:hover {
-                color: #277080;
-            }
+        .add-tutorial-icon:hover,
+        .upload-pdf-icon:hover {
+            color: #277080;
+        }
 
         .dropdown-toggle {
             max-width: calc(100% - 2rem);
-            /* Adjust based on space needed for the delete icon */
             display: block;
             word-wrap: break-word;
         }
 
         .delete-icon, .delete-tutorial-icon {
             margin-left: auto;
-            /* Pushes the icon to the right */
         }
 
         .bullet-icon {
             color: #75B3C9;
-            /* Adjust the color as needed */
         }
 
         .dropdown-toggle {
             max-width: calc(100% - 2rem);
-            /* Adjust based on space needed for the delete icon */
             display: block;
             word-wrap: break-word;
         }
@@ -74,34 +71,31 @@
             margin-bottom: 15px;
         }
 
-          .custom-offcanvas-width {
-            width: 25%; /* Set the default width to 25% */
-          }
+        .custom-offcanvas-width {
+        width: 25%; 
+        }
 
-          /* Adjust for smaller screens */
-          @@media (max-width: 576px) {
-            .custom-offcanvas-width {
-              width: 80%; /* Adjust the width for extra small screens */
-            }
-          }
+        @@media (max-width: 576px) {
+        .custom-offcanvas-width {
+            width: 80%; 
+        }
+        }
 
-          @@media (min-width: 577px) and (max-width: 768px) {
-            .custom-offcanvas-width {
-              width: 60%; /* Adjust the width for small screens */
-            }
-          }
+        @@media (min-width: 577px) and (max-width: 768px) {
+        .custom-offcanvas-width {
+            width: 60%;
+        }
+        }
 
-          @@media (min-width: 769px) and (max-width: 992px) {
-            .custom-offcanvas-width {
-              width: 40%; /* Adjust the width for medium screens */
-            }
-          }
+        @@media (min-width: 769px) and (max-width: 992px) {
+        .custom-offcanvas-width {
+            width: 40%;
+        }
+        }
 
         .card:hover {
             transform: scale(1.03);
-            /* Increase size by 3% on hover */
-            transition: transform 0.2s ease-in-out;
-            /* Add smooth transition effect */
+            transition: transform 0.2s ease-in-out;           
         }
 
         .card a:hover {
@@ -112,7 +106,9 @@
     </style>
 }
 
-<!-- Offcanvas for Tutorials -->
+
+
+<!-- Offcanvas for Topics -->
 <div class="offcanvas offcanvas-start custom-offcanvas-width" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
      aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
@@ -121,7 +117,7 @@
     </div>
     @if (User.Identity.Name == "admin231@gmail.com")
     {
-        <!-- Icon for adding new tutorials -->
+        <!-- Icon for adding new Topic -->
         <div class="d-flex justify-content-end pe-3">
             <button type="button" class="btn btn-link add-tutorial-icon" data-bs-toggle="modal"
                     data-bs-target="#addTutorialModal" data-current-page="@ViewBag.CurrentPage">
@@ -137,7 +133,7 @@
 
 
 
-<!-- Modal for adding new tutorials -->
+<!-- Modal for adding new Topic -->
 <div class="modal fade" id="addTutorialModal" tabindex="-1" aria-labelledby="addTutorialModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -164,6 +160,7 @@
         </div>
     </div>
 </div>
+
 
 
 <!-- Modal for adding new Projects -->
@@ -210,6 +207,8 @@
     </div>
 </div>
 
+
+
 <!-- Confirmation Delete Topic Modal -->
 <div class="modal fade" id="confirmDeleteTutorialModal" tabindex="-1" aria-labelledby="confirmDeleteTutorialModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -229,6 +228,8 @@
     </div>
 </div>
 
+
+
 <!-- Sure Modal for deleting Project -->
 <div class="modal fade" id="SureModal" tabindex="-1" aria-labelledby="SureModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -237,15 +238,14 @@
                 <h1 class="modal-title fs-5" id="SureModalLabel">Are you sure?</h1>
             </div>
             <div class="modal-body">
-                <!-- This paragraph will be updated dynamically -->
-                <p class="mb-4">Do you want to delete the project <strong id="modalProjectTitle"></strong>?</p>
-                <!-- Call deleteProject when clicking Yes -->
+                <p class="mb-4">Do you want to delete the project <strong id="modalProjectTitle"></strong>?</p>                
                 <button id="confirmDeleteProjectButton" class="btn btn-primary text-white border w-25">Yes</button>
                 <button type="button" class="btn btn-danger text-white w-25" data-bs-dismiss="modal">No</button>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <main class="main">
@@ -261,46 +261,36 @@
                 <p data-aos="fade-up" data-aos-delay="100">Quickly learn .NET now with ease!<i class="bi bi-hand-thumbs-up ms-1"></i><br></p>
             </div>
         </div>
+    </section>
 
-    </section><!-- /Hero Section -->
 
-    <!--Topics Section-->
-
-        <!-- Section Title -->
-        <div class="container section-title mt-5" data-aos="fade-up">
-            <h2>.NET Topics</h2>           
-        </div>
-        <!-- End Section Title -->
-
-        <div id="allTopicsDiv">
-            <partial name="_allTopicsPartial" model="Model.PaginatedTopics" />
-        </div>
 
     <!--Topics Section-->
+    <div class="container section-title mt-5" data-aos="fade-up">
+        <h2>.NET Topics</h2>           
+    </div>
+
+    <div id="allTopicsDiv">
+        <partial name="_allTopicsPartial" model="Model.PaginatedTopics" />
+    </div>
+
 
 
     <!--Projects Section-->
+    <div class="container section-title mt-5" data-aos="fade-up">
+        <h2>.NET Projects</h2>
+    </div>
 
-        <!-- Section Title -->
-        <div class="container section-title mt-5" data-aos="fade-up">
-            <h2>.NET Projects</h2>
-        </div>
-        <!-- End Section Title -->
+    <div id="allProjectsDiv">
+        <partial name="_allProjectsPartial" model="Model.PaginatedProjects" />  
+    </div>
 
-        <div id="allProjectsDiv">
-            <partial name="_allProjectsPartial" model="Model.PaginatedProjects" />  
-        </div>
-
-    <!--Projects Section-->
 
 
     <!-- About Section -->
     <section id="about" class="about section">
-
         <div class="container">
-
             <div class="row gy-4">
-
                 <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
                     <p class="who-we-are">Who We Are</p>
                     <h3>Empowering Developers with .NET Mastery</h3>
@@ -377,70 +367,55 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-    </section><!-- /About Section -->
+    </section>
+
+
 
     <!-- Contact Section -->
     <section id="contact" class="contact section mt-2">
-
-        <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Contact</h2>
             <p>Feel free to reach out for any inquiries regarding .NET, Big Data, Cloud Computing, or Machine Learning.</p>
             <p>I'm here to assist you with your technical learning journey!</p>
-        </div><!-- End Section Title -->
-
-
+        </div>
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-
             <div class="row gy-4">
-
                 <div class="col-lg-6">
                     <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up"
                          data-aos-delay="200">
                         <i class="bi bi-envelope"></i>
                         <a href="mailto:shuja@pucit.edu.pk" class="mt-2 text-decoration-none">shuja@pucit.edu.pk</a>
                     </div>
-                </div><!-- End Info Item -->
-
+                </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up"
                          data-aos-delay="300">
                         <i class="bi bi-linkedin"></i>
                         <a href="https://www.linkedin.com/in/shujamughal/" class="mt-2" target="_blank">View LinkedIn</a>
                     </div>
-                </div><!-- End Info Item -->
-
+                </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up"
                          data-aos-delay="400">
                         <i class="bi bi-facebook"></i>
                         <a href="https://www.facebook.com/shujamughal" class="mt-2" target="_blank">Visit Facebook</a>
                     </div>
-                </div><!-- End Info Item -->
-
+                </div>
             </div>
-
             <div class="row gy-4 mt-1">
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3399.316627966318!2d74.30704911009545!3d31.570364044564617!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39191ca7d960f837%3A0xc0bb6ddf0568a651!2sPunjab%20University%20College%20of%20Information%20Technology%20Old%20Campus!5e0!3m2!1sen!2s!4v1725917891907!5m2!1sen!2s"
                             width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-                </div><!-- End Google Maps -->
-
+                </div>
                 <div class="col-lg-6">
                     @{
-                        // Retrieve the logged-in user's email
-                        var userEmail = User.Identity?.Name; // Or however you retrieve the user's email
-                        var isAdmin = userEmail == "admin231@gmail.com"; // Check if the current user is the admin
+                        var userEmail = User.Identity?.Name; 
+                        var isAdmin = userEmail == "admin231@gmail.com";
                     }
-
                     <form id="sendMessageForm" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="400">
-
                         @Html.AntiForgeryToken() <!-- CSRF Protection -->
 
                         <div class="row gy-4">
@@ -449,7 +424,6 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="email" id="email" name="email" class="form-control" placeholder="Your Email" required="" @(isAdmin ? "disabled" : "")>
-
                             </div>
                             <div class="col-md-12">
                                 <input type="text" id="subject" name="subject" class="form-control" placeholder="Subject" required="" @(isAdmin ? "disabled" : "")>
@@ -464,65 +438,61 @@
                             </div>
                         </div>
                     </form>
-
-                </div><!-- End Contact Form -->
-
+                </div>
             </div>
 
             @if (User.Identity.Name == "admin231@gmail.com")
             {
-                <div class="row gy-4 mt-1">
-                    <!-- Pass the contacts from the first item of the model to the partial view -->
+                <div class="row gy-4 mt-1">                    
                     <partial name="_sendMessagesPartial" model="Model.Contacts" />
                 </div>
             }
-
         </div>
-
-    </section><!-- /Contact Section -->
+    </section>
 
 </main>
 
+
+
 @section Scripts {
 
-    <script>
-        // JavaScript/jQuery to set the current page value when the modal is shown
+    @* JavaScript/jQuery to set the current topic page value when the modal is shown *@
+    <script>        
         $('#addTutorialModal').on('show.bs.modal', function (event) {
-            // Get the button that triggered the modal
             var button = $(event.relatedTarget);
-
-            // Get the data-current-page attribute value
             var currentPage = button.data('current-page');
-
-            // Set the value to the hidden input field inside the modal
-            var modal = $(this);
+            var modal = $(this);  // Set the value to the hidden input field inside the modal
             modal.find('#currentPage').val(currentPage);
         });
-    </script>      
+    </script> 
+
+
+    @* JavaScript/jQuery to set the current project page value when the modal is shown *@
+    <script>
+        $('#addProjectModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var currentPage = button.data('currentproject-page');
+            var modal = $(this);
+            modal.find('#currentProjectPage').val(currentPage);
+        });
+    </script>
+    
 
     <script>
         function addTutorial() {
             var name = $('#tutorialName').val();
-            var currentPage = $('#currentPage').val(); // Get current page from hidden field
+            var currentPage = $('#currentPage').val(); 
 
             $.ajax({
-                type: "POST", // HTTP method
-                url: "/Admin/AddTutorial", // URL to send the request to
-                data: { tutorialName: name }, // Data to send
+                type: "POST", 
+                url: "/Admin/AddTutorial", 
+                data: { tutorialName: name },
 
                 success: function (result) {
-                    // Update the offcanvas with new content (the updated list of topics and lectures)
                     $('#offCanvasDiv').html(result).fadeIn('slow');
-
-                    // Call the function to update the topic navbar
                     topicNavBarUpdate();
-
                     loadPage(currentPage);
-
-                    // Close the modal after successful tutorial addition
-                    $('#addTutorialModal').modal('hide'); // Close the modal
-
-                    // Optionally, clear the input field for tutorial name
+                    $('#addTutorialModal').modal('hide');
                     $('#tutorialName').val('');
                 },
                 error: function () {
@@ -531,6 +501,7 @@
             });
         }
     </script>
+
 
     <script>
         function loadPage(pageNumber) {
@@ -548,53 +519,30 @@
         }
     </script>
 
-    <script>
-        // JavaScript/jQuery to set the current project page value when the modal is shown
-        $('#addProjectModal').on('show.bs.modal', function (event) {
-            // Get the button that triggered the modal
-            var button = $(event.relatedTarget);
-
-            // Get the data-currentProject-page attribute value from the button
-            var currentPage = button.data('currentproject-page');
-
-            // Set the value to the hidden input field inside the modal
-            var modal = $(this);
-            modal.find('#currentProjectPage').val(currentPage);
-        });
-
-    </script>
 
     <script>
         function addProject() {
-            // Create FormData object to collect form data, including files
             var formData = new FormData(document.getElementById("addProjectForm"));
-
             var currentProjectPage = $('#currentProjectPage').val();
 
             $.ajax({
-                url: '/Admin/AddProject', // URL of the action method
+                url: '/Admin/AddProject',
                 type: 'POST',
                 data: formData,
-                contentType: false, // Required for file upload
-                processData: false, // Prevent jQuery from processing the data
+                contentType: false, 
+                processData: false, 
                 success: function () {
-
                     loadProjectPage(currentProjectPage);
-
-                    // Optionally, close the modal after success
                     $('#addProjectModal').modal('hide');
-
-                    // Clear the form
                     $('#addProjectForm')[0].reset();
                 },
                 error: function (xhr, status, error) {
-                    // Error handling
                     console.log("Error: " + error);
                 }
             });
         }
-
     </script>
+
 
     <script>
         function loadProjectPage(pageNumber) {
@@ -612,13 +560,13 @@
         }
     </script>
 
+
     <script>
         function topicNavBarUpdate() {
             $.ajax({
-                type: "GET", // HTTP method
-                url: "/Home/topicNavBarUpdate", // URL to send the request to
+                type: "GET", 
+                url: "/Home/topicNavBarUpdate", 
                 success: function (result) {
-                    // Update the topic navbar with new content
                     $('#topic-wrapper').html(result).fadeIn('slow');
                     checkOverflow();
                 },
@@ -629,25 +577,19 @@
         }
     </script>
 
+
     <script>
         function sendMessage() {
-            // Create a FormData object from the form
             var formData = new FormData(document.getElementById("sendMessageForm"));
 
-            // Send the form data via AJAX to the server
             fetch('/Home/sendMessage', {
                 method: 'POST',
                 body: new URLSearchParams(formData)
-            })
-                .then(response => {
+            }) .then(response => {
                     if (response.ok) {
-                        // Display success alert
                         alert("Your message has been successfully sent!");
-
-                        // Optionally, clear the form
                         document.getElementById("sendMessageForm").reset();
                     } else {
-                        // Display error alert
                         alert("There was an error submitting your message.");
                     }
                 })
@@ -658,79 +600,66 @@
         }
     </script>
 
-    <script>
-        let tutorialIdToDelete = null; // Variable to store the lecture ID
 
-        // Use event delegation to handle dynamically added elements
+    <script>
+        let tutorialIdToDelete = null; 
+
         $(document).on('click', '.delete-tutorial-icon', function () {
-            tutorialIdToDelete = $(this).data('tutorial-id'); // Store the tutorial ID
+            tutorialIdToDelete = $(this).data('tutorial-id'); 
             currentPage = $(this).data('current-page');
             topicCount = $(this).data('topiccount');
         });
        
-        // When the Delete button in the modal is clicked, send the delete request
         $('#confirmDeleteTutorialButton').on('click', function () {
             if (tutorialIdToDelete) {
-                // Send an AJAX request to delete the lecture
                 $.ajax({
-                    url: '@Url.Action("DeleteTutorial", "Admin")', // URL to send the request to
-                    type: 'POST', // Use POST for delete requests
+                    url: '@Url.Action("DeleteTutorial", "Admin")', 
+                    type: 'POST', 
                     data: {
-                        id: tutorialIdToDelete // Pass the lecture ID to the server
+                        id: tutorialIdToDelete 
                     },
                     success: function (result) {
-                        // Update the off-canvas content with the new partial view
                         $('#offCanvasDiv').html(result).fadeIn('slow');
-
-                        // Call the function to update the topic navbar
                         topicNavBarUpdate();
-
                         // Check if current page is not the first page and only one topic is left on the current page
                         if (currentPage != 1 && topicCount == 1) {
-                            // If so, load the previous page
-                            loadPage(currentPage - 1);
+                            loadPage(currentPage - 1);    // If so, load the previous page                            
                         }
                         else {
-                            // Otherwise, reload the current page
                             loadPage(currentPage);
                         }
 
-                        // Close the modal after successful tutorial deletion
-                        $('#confirmDeleteTutorialModal').modal('hide'); // Close the modal
+                        $('#confirmDeleteTutorialModal').modal('hide');
                     },
                     error: function (xhr, status, error) {
-                        alert('An error occurred while deleting the Tutorial.'); // Show error if delete fails
+                        alert('An error occurred while deleting the Tutorial.');
                     }
                 });
             }
         });
-
     </script>
 
+
     <script>
-        // When the modal is about to be shown
         var sureModal = document.getElementById('SureModal');
         sureModal.addEventListener('show.bs.modal', function (event) {
-            // Button that triggered the modal
             var button = event.relatedTarget;
 
-            // Extract info from data-* attributes
             var projectId = button.getAttribute('data-id');
             var projectTitle = button.getAttribute('data-title');
             var projectPage = button.getAttribute('data-currentProject-page');
             var projectCount = button.getAttribute('data-ProjectCount');
 
-            // Update the modal's content with the project title
             var modalTitleElement = sureModal.querySelector('#modalProjectTitle');
             modalTitleElement.textContent = projectTitle;
 
-            // Dynamically set the deleteProject function for the Yes button
             var confirmDeleteButton = sureModal.querySelector('#confirmDeleteProjectButton');
             confirmDeleteButton.onclick = function () {
-                deleteProject(projectId,projectPage,projectCount); // Call deleteProject with the correct project ID
+                deleteProject(projectId,projectPage,projectCount);
             };
         });
     </script>
+
 
     <script>
         function deleteProject(projectId, projectPage, projectCount) {
@@ -738,20 +667,16 @@
                 url: '/Admin/DeleteProject',
                 type: 'POST',
                 data: { id: projectId },
-                success: function () {
-                    // Check if current page is not the first page and only one project is left on the current page
+                success: function () {                   
                     if (projectPage != 1 && projectCount == 1)
                     {
-                        // If so, load the previous page
                         loadProjectPage(projectPage - 1);
                     } 
                     else
                     {
-                        // Otherwise, reload the current page
                         loadProjectPage(projectPage);
                     }
 
-                    // Optionally, close the modal after success
                     $('#SureModal').modal('hide');
                 },
                 error: function () {
@@ -760,6 +685,7 @@
             });
         }
 	</script>
+
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 	<script src="~/js/signalr.js"></script>
 }

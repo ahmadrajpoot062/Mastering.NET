@@ -18,6 +18,7 @@ namespace Mastering.NET.Controllers
         private readonly GenericService<Project> _projectRepository;
         private readonly IWebHostEnvironment _env;
         private readonly IHubContext<NotificationHub> _notificationHubContext;
+
         public AdminController(GenericService<Topic> topicRepository, GenericService<Lecture> lectureRepository, IWebHostEnvironment env, GenericService<Contact> contactRepository, GenericService<Project> projectRepository, IHubContext<NotificationHub> notificationHubContext)
         {
             _topicRepository = topicRepository;
@@ -28,19 +29,18 @@ namespace Mastering.NET.Controllers
             _notificationHubContext = notificationHubContext;
         }
 
+
         [HttpPost]
         public async Task<IActionResult> AddTutorial(string tutorialName)
         {
-            // Create a new topic and add it to the database
             Topic t = new Topic { TopicName = tutorialName };
             await _topicRepository.Add(t);
 
-            // Get the updated list of topics
             List<Topic> topics = await _topicRepository.GetAll();
 
-            // Return the updated partial view
             return PartialView("_OffCanvasPartial", topics);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> UploadLecture(string title, string content, int topicId)
@@ -59,34 +59,34 @@ namespace Mastering.NET.Controllers
             List<Lecture> lectures = await _lectureRepository.GetAll();
             var filteredLectures = lectures.Where(lecture => lecture.TopId == topicId).ToList();
 
-            // Send notification using SignalR
             await _notificationHubContext.Clients.All.SendAsync("ReceiveNotification",topicId, topic.TopicName, title);
 
             return PartialView("_leftNavPartial", filteredLectures);
         }
 
 
-        public string getFilePath(IFormFile myFile)
-        {
-            if (myFile != null && myFile.Length > 0)
-            {
-                string folderPath = Path.Combine("UploadedFiles", "TutorialNotes"); // Relative path from wwwroot
-                string fileName = Path.Combine(folderPath, Guid.NewGuid().ToString() + myFile.FileName);
-                string wwwRootPath = _env.WebRootPath;
-                if (!Directory.Exists(Path.Combine(wwwRootPath, folderPath))) // Check if path exists relative to wwwroot
-                {
-                    Directory.CreateDirectory(Path.Combine(wwwRootPath, folderPath)); // Create directory if needed
-                }
+        //public string getFilePath(IFormFile myFile)
+        //{
+        //    if (myFile != null && myFile.Length > 0)
+        //    {
+        //        string folderPath = Path.Combine("UploadedFiles", "TutorialNotes"); // Relative path from wwwroot
+        //        string fileName = Path.Combine(folderPath, Guid.NewGuid().ToString() + myFile.FileName);
+        //        string wwwRootPath = _env.WebRootPath;
+        //        if (!Directory.Exists(Path.Combine(wwwRootPath, folderPath))) // Check if path exists relative to wwwroot
+        //        {
+        //            Directory.CreateDirectory(Path.Combine(wwwRootPath, folderPath)); // Create directory if needed
+        //        }
 
-                string filePath = Path.Combine(wwwRootPath, fileName); // Full path for saving
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    myFile.CopyTo(fileStream);
-                }
-                return $"\\{fileName}"; // Return file path relative to wwwroot
-            }
-            return string.Empty;
-        }
+        //        string filePath = Path.Combine(wwwRootPath, fileName); // Full path for saving
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            myFile.CopyTo(fileStream);
+        //        }
+        //        return $"\\{fileName}"; // Return file path relative to wwwroot
+        //    }
+        //    return string.Empty;
+        //}
+
 
         [HttpPost]
         public async Task<IActionResult> DeleteLecture(int id, int topicid)
@@ -99,6 +99,7 @@ namespace Mastering.NET.Controllers
             return PartialView("_leftNavPartial", filteredLectures);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> DeleteTutorial(int id)
         {
@@ -109,6 +110,7 @@ namespace Mastering.NET.Controllers
             return PartialView("_OffCanvasPartial", topics);
         }
 
+
         [HttpPost]
         public async Task AddProject(string projectTitle, string projectDescription, string gitHubLink, List<IFormFile> projectImages, IFormFile userManual)
         {
@@ -117,7 +119,6 @@ namespace Mastering.NET.Controllers
                 BadRequest("Invalid project data.");
             }
 
-            // Process the images - store them and generate URLs
             List<string> imageUrls = new List<string>();           
 
             foreach (var image in projectImages)
@@ -183,12 +184,12 @@ namespace Mastering.NET.Controllers
             await _projectRepository.Add(newProject);
         }
 
+
         [HttpPost]
         public async Task DeleteProject(int id)
         {
             await _projectRepository.Delete(id);  
         }
-
 
     }
 }

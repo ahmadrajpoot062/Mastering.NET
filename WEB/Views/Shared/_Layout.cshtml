@@ -37,34 +37,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <style>
-        /* Container for the topic list and arrows */
+
         #topic-wrapper {
             position: relative;
             width: 100%;
-            height: 35px; /* Height of the navbar */
+            height: 35px; 
             background-color: #388DA8;
             display: flex;
             align-items: center;
-            overflow: hidden; /* Hide overflow to avoid scrollbars */
+            overflow: hidden;
         }
 
-        /* Arrow icons */
         .scroll-arrow {
             position: absolute;
             top: 0;
             width: 30px;
             height: 100%;
-            display: none; /* Hidden by default, shown only when needed */
+            display: none; 
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            background-color: #3B5E7D; /* Solid background color */
-            color: white; /* Arrow icon color */
+            background-color: #3B5E7D; 
+            color: white; 
             z-index: 1000;
-            font-size: 1.5rem; /* Adjust size of the icon if needed */
+            font-size: 1.5rem;
         }
 
-        /* Display the arrows only when content overflows */
         #scroll-left {
             left: 0;
         }
@@ -73,59 +71,52 @@
             right: 0;
         }
 
-
-        /* Container for the actual topics */
         #topic-container {
             flex-grow: 1;
             overflow: hidden;
             white-space: nowrap;
             display: flex;
             align-items: center;
-            padding: 5px 40px; /* Space for the arrows */
+            padding: 5px 40px; 
             scroll-behavior: smooth;
-            height: 100%; /* Match height to the parent container */
+            height: 100%; 
         }
 
-            /* Remove margins and padding from ul */
-            #topic-container ul {
-                display: flex;
-                align-items: center;
-                height: 100%; /* Ensure the ul height matches the navbar height */
-                margin: 0;
-                padding: 0;
-                list-style: none; /* Remove bullet points */
-            }
+        #topic-container ul {
+            display: flex;
+            align-items: center;
+            height: 100%; 
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-            /* Topic list items */
-            #topic-container li {
-                display: flex;
-                align-items: center;
-                margin: 0 5px;
-                padding: 0;
-                height: 100%; /* Ensure li height matches the navbar height */
-            }
+        #topic-container li {
+            display: flex;
+            align-items: center;
+            margin: 0 5px;
+            padding: 0;
+            height: 100%;
+        }
 
-                /* Topic links with styling */
-                #topic-container li a {
-                    text-decoration: none;
-                    color: white;
-                    padding: 5px 10px;
-                    border: 1px solid white;
-                    border-radius: 5px;
-                    background-color: #4da2b3;
-                    transition: background-color 0.3s;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100%; /* Ensure the link takes full height of the li */
-                }
+        #topic-container li a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            background-color: #4da2b3;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
 
-                    /* Hover effect for topic links */
-                    #topic-container li a:hover {
-                        background-color: #336d83;
-                    }
+        #topic-container li a:hover {
+            background-color: #336d83;
+        }
 
-        /* Adjust selected topic style */
         .selected-topic {
             background-color: #336d83;
         }
@@ -146,7 +137,6 @@
                     <img src="~/assets/img/logo.png" alt="">
                     <h1 class="sitename">Mastering .NET</h1>
                 </a>
-
                 <nav id="navmenu" class="navmenu me-5">
                     <ul>
                         <li><a href="#hero" class="active">Home<i class="bi bi-house fs-5"></i></a></li>
@@ -170,10 +160,8 @@
     </div>
 
 
-
-
     <!-- Main content -->
-        @RenderBody()
+    @RenderBody()
     
 
     <footer id="footer" class="mt-5 footer position-relative light-background py-4">
@@ -248,10 +236,12 @@
         </div>
     </footer>
 
+
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
         <i class="bi bi-arrow-up-short"></i>
     </a>
+
 
     <!-- Preloader -->
     <div id="preloader"></div>
@@ -266,6 +256,7 @@
 
     <!-- Main JS File -->
     <script src="~/assets/js/main.js"></script>
+
      <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -299,8 +290,9 @@
         });
     </script>
 
+
+    @* Detect content overflow and toggle arrow visibility *@
     <script>
-        // Detect content overflow and toggle arrow visibility
         function checkOverflow() {
             const container = document.getElementById('topic-container');
             const scrollLeft = document.getElementById('scroll-left');
@@ -308,11 +300,11 @@
 
             // Check if the container content overflows horizontally
             if (container.scrollWidth > container.clientWidth) {
-                scrollLeft.style.display = 'flex'; // Show the left arrow if overflow occurs
-                scrollRight.style.display = 'flex'; // Show the right arrow if overflow occurs
+                scrollLeft.style.display = 'flex';
+                scrollRight.style.display = 'flex';
             } else {
-                scrollLeft.style.display = 'none'; // Hide the left arrow if no overflow
-                scrollRight.style.display = 'none'; // Hide the right arrow if no overflow
+                scrollLeft.style.display = 'none';
+                scrollRight.style.display = 'none';
             }
         }
 
@@ -320,7 +312,7 @@
         document.getElementById('scroll-left').addEventListener('click', function () {
             const container = document.getElementById('topic-container');
             container.scrollBy({
-                left: -200, // Scroll left by 200px (adjust as needed)
+                left: -200, // Scroll left by 200px
                 behavior: 'smooth'
             });
         });
@@ -328,7 +320,7 @@
         document.getElementById('scroll-right').addEventListener('click', function () {
             const container = document.getElementById('topic-container');
             container.scrollBy({
-                left: 200, // Scroll right by 200px (adjust as needed)
+                left: 200, // Scroll right by 200px
                 behavior: 'smooth'
             });
         });
@@ -336,8 +328,8 @@
         // Run the overflow check on page load and on window resize
         window.onload = checkOverflow;
         window.onresize = checkOverflow;
-
     </script>
+
 
     <partial name="_ValidationScriptsPartial" />;
 </body>

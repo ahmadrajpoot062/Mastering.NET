@@ -13,16 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Register SignalR
 builder.Services.AddSignalR();
 
+
 // Authorization Policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Email, "admin231@gmail.com"));
 });
 
-// Registering the GenericRepository with dependency injection
+
+//dependency injection
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-// Regitering the GenericService with dependency injection
 builder.Services.AddScoped(typeof(GenericService<>));
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

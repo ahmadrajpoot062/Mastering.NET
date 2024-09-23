@@ -3,11 +3,11 @@
 <!-- Testimonials Section -->
 <section id="testimonials" class="testimonials section light-background">
 
-    <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
         <h2>Messages</h2>
         <p>Below are the messages sent by different users for help!</p>
-    </div><!-- End Section Title -->
+    </div>
+
     @if (Model != null && Model.Any())
     {
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -20,17 +20,17 @@
                                 <div>
                                     <!-- Heading for Subject -->
                                     <h3 style="color: #549DB4;">Subject</h3>
-                                    <p>@Html.Raw(@Html.Encode(contact.Subject))</p> <!-- Encoding Subject -->
+                                    <p>@Html.Raw(@Html.Encode(contact.Subject))</p>
                                 </div>
                                 <div>
                                     <!-- Heading for Message -->
                                     <h3 style="color: #549DB4;">Message</h3>
-                                    <p>@Html.Raw(@Html.Encode(contact.Message))</p> <!-- Encoding Message -->
+                                    <p>@Html.Raw(@Html.Encode(contact.Message))</p> 
                                 </div>
                                 <div class="profile mt-auto">
                                     <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                                    <h3>@Html.Raw(@Html.Encode(contact.Name))</h3> <!-- Encoding Name -->
-                                    <h4>@Html.Raw(@Html.Encode(contact.Email))</h4> <!-- Encoding Email -->
+                                    <h3>@Html.Raw(@Html.Encode(contact.Name))</h3> 
+                                    <h4>@Html.Raw(@Html.Encode(contact.Email))</h4>
                                 </div>
                             </div>
                         </div>
@@ -51,4 +51,4 @@
             </div>
         </section>
     }
-</section><!-- /Testimonials Section -->
+</section>
