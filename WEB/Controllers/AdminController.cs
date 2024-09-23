@@ -1,9 +1,11 @@
 ﻿using Application.Services;
 using Core.Entities;
+using Infrastructure.Hubs;
 using Mastering.NET.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Mastering.NET.Controllers
 {
@@ -15,13 +17,15 @@ namespace Mastering.NET.Controllers
         private readonly GenericService<Contact> _contactRepository;
         private readonly GenericService<Project> _projectRepository;
         private readonly IWebHostEnvironment _env;
-        public AdminController(GenericService<Topic> topicRepository, GenericService<Lecture> lectureRepository, IWebHostEnvironment env, GenericService<Contact> contactRepository, GenericService<Project> projectRepository)
+        private readonly IHubContext<NotificationHub> _notificationHubContext;
+        public AdminController(GenericService<Topic> topicRepository, GenericService<Lecture> lectureRepository, IWebHostEnvironment env, GenericService<Contact> contactRepository, GenericService<Project> projectRepository, IHubContext<NotificationHub> notificationHubContext)
         {
             _topicRepository = topicRepository;
             _lectureRepository = lectureRepository;
             _env = env;
             _contactRepository = contactRepository;
             _projectRepository = projectRepository;
+            _notificationHubContext = notificationHubContext;
         }
 
         [HttpPost]
@@ -48,14 +52,19 @@ namespace Mastering.NET.Controllers
                 TopId = topicId
             };
 
+            Topic topic = await _topicRepository.GetById(topicId);
+
             await _lectureRepository.Add(lecture);
 
             List<Lecture> lectures = await _lectureRepository.GetAll();
             var filteredLectures = lectures.Where(lecture => lecture.TopId == topicId).ToList();
 
+            // Send notification using SignalR
+            await _notificationHubContext.Clients.All.SendAsync("ReceiveNotification",topicId, topic.TopicName, title);
+
             return PartialView("_leftNavPartial", filteredLectures);
-            
         }
+
 
         public string getFilePath(IFormFile myFile)
         {
@@ -101,7 +110,7 @@ namespace Mastering.NET.Controllers
         }
 
         [HttpPost]
-        public async Task AddProject(string projectTitle, string projectDescription, string gitHubLink, List<IFormFile> projectImages)
+        public async Task AddProject(string projectTitle, string projectDescription, string gitHubLink, List<IFormFile> projectImages, IFormFile userManual)
         {
             if (string.IsNullOrEmpty(projectTitle) || string.IsNullOrEmpty(projectDescription) || string.IsNullOrEmpty(gitHubLink))
             {
@@ -132,14 +141,45 @@ namespace Mastering.NET.Controllers
                 }                
             }
 
-            var newProject = new Project
-            {
-                Title = projectTitle,
-                Description = projectDescription,
-                GitHubLink = gitHubLink,
-                ImageUrls = string.Join(" ", imageUrls) // Space-separated image URLs
-            };
+            string userManualUrl = null;
+            string userManualName = null;
+            var newProject = new Project();
 
+            if (userManual != null && userManual.Length > 0) 
+            {
+                string folderPath2 = Path.Combine("UploadedFiles", "ProjectUserManuals"); // Relative path from wwwroot
+                string fileName2 = Path.Combine(folderPath2, Guid.NewGuid().ToString() + userManual.FileName.Replace(" ", ""));
+                string wwwRootPath2 = _env.WebRootPath;
+                if (!Directory.Exists(Path.Combine(wwwRootPath2, folderPath2))) // Check if path exists relative to wwwroot
+                {
+                    Directory.CreateDirectory(Path.Combine(wwwRootPath2, folderPath2)); // Create directory if needed
+                }
+
+                string filePath2 = Path.Combine(wwwRootPath2, fileName2); // Full path for saving
+                using (var fileStream2 = new FileStream(filePath2, FileMode.Create))
+                {
+                    userManual.CopyTo(fileStream2);
+                }
+                userManualUrl = $"\\{fileName2}";
+                userManualName = userManual.FileName;
+
+
+                newProject.Title = projectTitle;
+                newProject.Description = projectDescription;
+                newProject.GitHubLink = gitHubLink;
+                newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs
+                newProject.UserManual = userManualUrl + " " + userManualName;
+                
+            }
+            else
+            {
+                newProject.Title = projectTitle;
+                newProject.Description = projectDescription;
+                newProject.GitHubLink = gitHubLink;
+                newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs
+                newProject.UserManual = null;
+            }
+            
             await _projectRepository.Add(newProject);
         }
 

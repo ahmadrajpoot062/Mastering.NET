@@ -97,6 +97,18 @@
             }
           }
 
+        .card:hover {
+            transform: scale(1.03);
+            /* Increase size by 3% on hover */
+            transition: transform 0.2s ease-in-out;
+            /* Add smooth transition effect */
+        }
+
+        .card a:hover {
+            background-color: #549DB4;
+            color: white;
+        }
+
     </style>
 }
 
@@ -181,6 +193,11 @@
                         <label for="projectImages" class="form-label">Upload Project Images</label>
                         <input type="file" class="form-control" id="projectImages" name="projectImages" accept="image/*" multiple required>
                         <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userManual" class="form-label">Upload User Manual</label>
+                        <input type="file" class="form-control" id="userManual" name="userManual" accept=".pdf,.doc,.docx">
+                        <small class="form-text text-muted">You can upload file of extension: .pdf, .doc, .docx.</small>
                     </div>
                     <div class="d-flex justify-content-center">
                         <button type="button" onclick="addProject();" class="btn text-white w-50 mt-4" style="background-color: #559DB4;">
@@ -742,5 +759,7 @@
                 }
             });
         }
-    </script>
+	</script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+	<script src="~/js/signalr.js"></script>
 }

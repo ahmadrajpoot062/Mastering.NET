@@ -1,5 +1,6 @@
 using Application.Services;
 using Core.Interfaces;
+using Infrastructure.Hubs;
 using Infrastructure.Repositories;
 using Mastering.NET.Data;
 using Mastering.NET.Models;
@@ -8,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Register SignalR
+builder.Services.AddSignalR();
 
 // Authorization Policies
 builder.Services.AddAuthorization(options =>
@@ -55,5 +59,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+// Map the SignalR hub
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

@@ -4,6 +4,11 @@
     Layout = null;
 }
 
+@using Application.Services
+@using Core.Entities
+
+@inject GenericService<Topic> _topicRepository
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -33,6 +38,8 @@
     <!-- Main CSS File -->
     <link href="~/assets/css/main.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 
     <style>
 		body {
@@ -41,6 +48,14 @@
             background-repeat: no-repeat;
             padding-top: 80px; /* Same as the height of the header */
         }
+
+        .no-hover:hover,
+        .no-hover:focus {
+            text-decoration: none;
+            color: #549DB4; /* Keeps the color the same */
+            background-color: transparent; /* Keeps the background color unchanged */            
+        }
+
 
         .top {
             color: #fff;
@@ -94,7 +109,7 @@
 
         <!-- Project Title -->
         <div class="row">
-            <div class="h2 fw-bold fst-italic text-center px-2 px-sm-0 shadow py-2"
+            <div class="h2 fw-bold fst-italic text-center px-2 px-sm-0 shadow py-2 mt-5"
                  style="font-family: Verdana, Geneva, Tahoma, sans-serif; color: #549DB4;">
                 @Model.Title
             </div>
@@ -104,13 +119,14 @@
         <div class="row mt-5">
             <!-- Project Images Carousel -->
             <div class="col-lg-7">
-                <div id="projectImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                
+                <div id="projectImagesCarousel" class="carousel slide mb-4 " data-bs-ride="carousel" data-aos="fade-up" data-aos-delay="100">
                     <div class="carousel-inner">
                         @for (int i = 0; i < Model.ImageUrls.Split(' ').Length; i++)
                         {
                             var imageUrl = Model.ImageUrls.Split(' ')[i];
                             <div class="carousel-item @(i == 0 ? "active" : "")">
-                                <img src="@imageUrl" class="d-block w-100 img-fluid rounded" alt="Project Image">
+                                <img src="@imageUrl" class="d-block w-100 img-fluid rounded border border-3 shadow" alt="Project Image" data-bs-target="#projectImagesCarousel" data-bs-slide-to="@i">                                
                             </div>
                         }
                     </div>
@@ -124,24 +140,123 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
+
+                <div class="card p-4 shadow w-100 mb-3" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="fw-bold" style="color:"><i class="fab fa-github me-2"></i>GitHub Repository</h4>
+                    <p class="text-muted mt-3">
+                        You can find the source code for @Model.Title on GitHub at the following link:
+                    </p>
+                    <a href="@Model.GitHubLink" target="_blank" class="no-hover">@Model.GitHubLink</a>
+
+                </div>
+                @if (Model.UserManual != null)
+                {
+                    <div class="card p-4 shadow w-100 mb-3" data-aos="fade-up" data-aos-delay="100">
+                        <h4 class="fw-bold" style="color:"><i class="fas fa-book me-2"></i>User Manual</h4>
+                        <p class="text-muted mt-3">
+                            Below is the user Manual of @Model.Title. You can view/download it for more details:
+                        </p>
+                        <a href="@Url.Action("UserManual","Home",new { userManual = @Model.UserManual})" target="_blank" class="btn" style="background-color: #549DB4; color: white">
+                            User Manual
+                        </a>
+                    </div>
+                }
+
+
             </div>
 
+            <!-- Image Modal -->
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="imageModalLabel">Project Image</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="" id="modalImage" alt="Large Project Image" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Project Description and Details -->
-            <div class="col-lg-5">
+            <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
                 <div class="card p-4 shadow-sm">
                     <h4 class="fw-bold" style="color:">Project Description</h4>
-                    <p class="text-muted mt-3">@Model.Description</p>
+                    <p class="text-muted mt-3">@Model.Description</p>                  
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <div class="mt-4">
-                        <a href="@Model.GitHubLink" target="_blank" class="btn" style="background-color: #549DB4; color: white">
-                            <i class="fab fa-github me-2"></i>GitHub Link
+    <footer id="footer" class="mt-5 footer position-relative light-background py-4">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-4">
+                <!-- About Section -->
+                <div class="col-lg-4 col-md-6 footer-about animate-section" data-aos="fade-up" data-aos-delay="150">
+                    <a href="Home/Index" class="logo d-flex align-items-center mb-3 logo-animate">
+                        <span class="sitename">Mastering .NET</span>
+                    </a>
+                    <p class="text-muted">
+                        Ph.D. in Computer Architecture from Universitat Politècnica de Catalunya, Spain. Experienced educator and
+                        researcher with expertise in Big Data, Cloud Computing, and Machine Learning.
+                    </p>
+                    <p class="mt-3">
+                        <strong>Email:</strong> <a href="mailto:shuja@pucit.edu.pk"
+                                                   class="text-decoration-none">shuja@pucit.edu.pk</a>
+                    </p>
+                </div>
+
+                <!-- Useful Links Section -->
+                <div class="col-lg-2 col-md-3 footer-links animate-section" data-aos="fade-up" data-aos-delay="200">
+                    <h4>Useful Links</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="Home/Index#hero" class="active link-animate">Home</a></li>
+                        <li><a href="Home/Index#about" class="link-animate">About Us</a></li>
+                        <li><a href="Home/Index#contact" class="link-animate">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Education Section -->
+                <div class="col-lg-3 col-md-6 footer-education animate-section" data-aos="fade-up" data-aos-delay="250">
+                    <h4>Education</h4>
+                    <ul class="list-unstyled">
+                        <li>Ph.D. Computer Architecture - UPC, Spain</li>
+                        <li>MS Computer Science - LUMS, Pakistan & Universität Paderborn, Germany</li>
+                        <li>BS Computer Science - PUCIT, Pakistan</li>
+                    </ul>
+                </div>
+
+                <!-- Social Links Section -->
+                <div class="col-lg-3 col-md-6 footer-social animate-section" data-aos="fade-up" data-aos-delay="300">
+                    <h4>Social links</h4>
+                    <div class="social-links d-flex mt-4">
+                        <a href="https://github.com/shujamughal" target="_blank" class="social-icon">
+                            <i class="bi bi-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/shujamughal/" target="_blank" class="social-icon">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="https://www.facebook.com/shujamughal" target="_blank" class="social-icon">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/powerlatics/" target="_blank" class="social-icon">
+                            <i class="bi bi-instagram"></i>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Bottom Section -->
+        <div class="container mt-4 text-center animate-section" data-aos="fade-up" data-aos-delay="100">
+            <p>© <strong>Mastering .NET</strong> All Rights Reserved</p>
+            <p class="credits">
+                Designed by <a href="https://www.linkedin.com/in/shujamughal/" target="_blank">Shuja-ur-Rehman Baig</a>
+            </p>
+        </div>
+    </footer>
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
@@ -200,10 +315,27 @@
 
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('#projectImagesCarousel img').on('click', function () {
+                var index = $(this).closest('.carousel-item').index();
+                $('#projectImagesCarousel').carousel(index); // Jump to the clicked image in carousel
+                $('#imageModal').modal('show'); // Show the modal
+                $('#modalImage').attr('src', $(this).attr('src')); // Set the modal image source
+            });
+        });
+    </script>
 
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr.js"></script>
 
 </body>
 </html>
+
+
+
 
 
 

@@ -34,6 +34,8 @@
     <!-- Main CSS File -->
 	<link href="~/assets/css/main.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <style>
         /* Container for the topic list and arrows */
         #topic-wrapper {
@@ -264,7 +266,8 @@
 
     <!-- Main JS File -->
     <script src="~/assets/js/main.js"></script>
-
+     <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 

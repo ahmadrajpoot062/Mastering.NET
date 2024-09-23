@@ -123,19 +123,22 @@ namespace WEB.Controllers
 
             return Ok("Your message has been successfully sent.");
         }
-        public async Task<IActionResult> ViewNotes(string filePath, string fileName)
+        public async Task<IActionResult> UserManual(string userManual)
         {
+            var userManualURLs = userManual.Split(' ');
 
-            if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(fileName))
-            {
-                return NotFound("File path or file name is not provided.");
-            }
+            // Ignore the first item and join the rest with a space
+            string userManualName = string.Join(" ", userManualURLs.Skip(1));
 
-            string extension = Path.GetExtension(filePath)?.ToLower();
+            // Assuming userManualURLs[0] contains the actual URL or path
+            var userManualURL = userManualURLs[0];
 
-            var model = new { FilePath = filePath, FileName = fileName, Extension = extension };
+            string extension = Path.GetExtension(userManualURL)?.ToLower();
+
+            var model = new { UserManual = userManualURL, UserManualName = userManualName, Extension = extension };
             return View(model);
         }
+
 
         public async Task<IActionResult> viewProjectDetails()
         {

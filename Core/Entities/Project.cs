@@ -16,5 +16,6 @@ namespace Core.Entities
 
         // Space-separated URLs
         public string ImageUrls { get; set; }
+        public string? UserManual { get; set; }  
     }
 }

@@ -41,6 +41,8 @@
     <!-- Main CSS File -->
     <link href="~/assets/css/main.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
    <style>
         
         .left-navbar {
@@ -467,6 +469,7 @@
 
                       var myhtml = '';
                         $('#content-section').html(myhtml).fadeIn('slow');
+                        $('#lecture-name').html(myhtml).fadeIn('slow');
 
                         // Close the modal after successful tutorial deletion
                         $('#confirmDeleteModal').modal('hide'); // Close the modal
@@ -494,6 +497,10 @@
         }
     </script>
 
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr.js"></script>
 
     <partial name="_ValidationScriptsPartial" />;
 </body>
