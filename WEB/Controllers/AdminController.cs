@@ -112,7 +112,7 @@ namespace Mastering.NET.Controllers
 
 
         [HttpPost]
-        public async Task AddProject(string projectTitle, string projectDescription, string gitHubLink, List<IFormFile> projectImages, IFormFile userManual)
+        public async Task AddProject(string projectTitle, string projectDescription, string gitHubLink,IFormFile profileImage, List<IFormFile> projectImages, IFormFile userManual)
         {
             if (string.IsNullOrEmpty(projectTitle) || string.IsNullOrEmpty(projectDescription) || string.IsNullOrEmpty(gitHubLink))
             {
@@ -142,6 +142,25 @@ namespace Mastering.NET.Controllers
                 }                
             }
 
+            string profileImg = null;
+            if (profileImage != null && profileImage.Length > 0)
+            {
+                string folderPath3 = Path.Combine("UploadedFiles", "ProjectsProfileImages"); // Relative path from wwwroot
+                string fileName3 = Path.Combine(folderPath3, Guid.NewGuid().ToString() + profileImage.FileName.Replace(" ", ""));
+                string wwwRootPath3 = _env.WebRootPath;
+                if (!Directory.Exists(Path.Combine(wwwRootPath3, folderPath3))) // Check if path exists relative to wwwroot
+                {
+                    Directory.CreateDirectory(Path.Combine(wwwRootPath3, folderPath3)); // Create directory if needed
+                }
+
+                string filePath3 = Path.Combine(wwwRootPath3, fileName3); // Full path for saving
+                using (var fileStream = new FileStream(filePath3, FileMode.Create))
+                {
+                    profileImage.CopyTo(fileStream);
+                }
+                profileImg=$"\\{fileName3}"; // Return file path relative to wwwroot
+            }
+
             string userManualUrl = null;
             string userManualName = null;
             var newProject = new Project();
@@ -168,6 +187,7 @@ namespace Mastering.NET.Controllers
                 newProject.Title = projectTitle;
                 newProject.Description = projectDescription;
                 newProject.GitHubLink = gitHubLink;
+                newProject.ProfileImageURL= profileImg;
                 newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs
                 newProject.UserManual = userManualUrl + " " + userManualName;
                 
@@ -177,6 +197,7 @@ namespace Mastering.NET.Controllers
                 newProject.Title = projectTitle;
                 newProject.Description = projectDescription;
                 newProject.GitHubLink = gitHubLink;
+                newProject.ProfileImageURL = profileImg;
                 newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs
                 newProject.UserManual = null;
             }

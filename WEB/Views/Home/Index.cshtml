@@ -186,12 +186,17 @@
                         <label for="gitHubLink" class="form-label">Link</label>
                         <input type="url" class="form-control" id="gitHubLink" name="gitHubLink" placeholder="Enter GitHub link" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
+                        <label for="profileImage" class="form-label">Upload Profile Image</label>
+                        <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" required>
+                        <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
+                    </div>
+                    <div class="mb-4">
                         <label for="projectImages" class="form-label">Upload Project Images</label>
                         <input type="file" class="form-control" id="projectImages" name="projectImages" accept="image/*" multiple required>
                         <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="userManual" class="form-label">Upload User Manual</label>
                         <input type="file" class="form-control" id="userManual" name="userManual" accept=".pdf,.doc,.docx">
                         <small class="form-text text-muted">You can upload file of extension: .pdf, .doc, .docx.</small>

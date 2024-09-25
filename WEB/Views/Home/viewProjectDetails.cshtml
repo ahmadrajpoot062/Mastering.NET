@@ -49,13 +49,6 @@
             padding-top: 80px; 
         }
 
-        .no-hover:hover,
-        .no-hover:focus {
-            text-decoration: none;
-            color: #549DB4;
-            background-color: transparent;
-        }
-
         .top {
             color: #fff;
             text-decoration: underline;
@@ -70,6 +63,36 @@
             width: 100%;
             height: 100%;
             object-fit: cover; 
+        }
+
+        .carousel-control-prev-icon::after {
+            content: '\2039'; 
+            font-size: 2rem;
+            color: black; 
+            padding:0px 15px;
+        }
+
+        .carousel-control-prev-icon:hover::after {
+            content: '\2039';
+            border-radius:50%;
+            background-color: #549DB4;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .carousel-control-next-icon::after {
+            content: '\203A'; 
+            font-size: 2rem;
+            color: black; 
+            padding: 0px 15px;
+        }
+
+        .carousel-control-next-icon:hover::after {
+            content: '\203A';
+            border-radius: 50%;
+            background-color: #549DB4;
+            font-size: 2rem;
+            color: white;
         }
     </style>
 
@@ -118,14 +141,17 @@
         <!-- Project Carousel and Details -->
         <div class="row mt-5">
             <div class="col-lg-7">
-                
+
                 <div id="projectImagesCarousel" class="carousel slide mb-4 " data-bs-ride="carousel" data-aos="fade-up" data-aos-delay="100">
                     <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="@Model.ProfileImageURL" class="d-block w-100 img-fluid rounded border border-3 shadow" alt="Project Image" data-bs-target="#projectImagesCarousel" data-bs-slide-to="0">
+                        </div>
                         @for (int i = 0; i < Model.ImageUrls.Split(' ').Length; i++)
                         {
                             var imageUrl = Model.ImageUrls.Split(' ')[i];
-                            <div class="carousel-item @(i == 0 ? "active" : "")">
-                                <img src="@imageUrl" class="d-block w-100 img-fluid rounded border border-3 shadow" alt="Project Image" data-bs-target="#projectImagesCarousel" data-bs-slide-to="@i">                                
+                            <div class="carousel-item">
+                                <img src="@imageUrl" class="d-block w-100 img-fluid rounded border border-3 shadow" alt="Project Image" data-bs-target="#projectImagesCarousel" data-bs-slide-to="@i">
                             </div>
                         }
                     </div>
@@ -140,12 +166,17 @@
                     </button>
                 </div>
 
+
                 <div class="card p-4 shadow w-100 mb-3" data-aos="fade-up" data-aos-delay="100">
                     <h4 class="fw-bold" style="color:"><i class="fab fa-github me-2"></i>GitHub Repository</h4>
                     <p class="text-muted mt-3">
                         You can find the source code for @Model.Title on GitHub at the following link:
                     </p>
-                    <a href="@Model.GitHubLink" target="_blank" class="no-hover">@Model.GitHubLink</a>
+                    <a href="@Model.GitHubLink" target="_blank" style="color: inherit; text-decoration: none; background-color: initial; transition: all 0.3s ease;"
+                       onmouseover="this.style.backgroundColor='transparent'; this.style.color='blue';"
+                       onmouseout="this.style.backgroundColor='initial'; this.style.color='black';">
+                        @Model.GitHubLink
+                    </a>
 
                 </div>
                 @if (Model.UserManual != null)

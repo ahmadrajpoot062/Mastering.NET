@@ -14,6 +14,8 @@ namespace Core.Entities
 
         public string GitHubLink { get; set; }
 
+        public string ProfileImageURL {  get; set; }
+
         // Space-separated URLs
         public string ImageUrls { get; set; }
         public string? UserManual { get; set; }  
