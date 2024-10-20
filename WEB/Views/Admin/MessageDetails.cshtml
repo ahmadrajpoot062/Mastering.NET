@@ -1,0 +1,77 @@
+﻿@model Core.Entities.Contact
+
+@section Styles{
+    <style>
+        .message-page {
+            font-family: Arial, sans-serif; /* Clean and modern font */
+        }
+
+        .message-container {
+            max-width: 800px; /* Max width for the content */
+            margin: 150px auto 50px; /* Centered with top and bottom margins */
+            padding: 20px; /* Padding for the container */
+            background-color: #F7F9FB; /* White background for the message details */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+
+            .message-container h2 {
+                color: #2C748B; /* Subject color */
+                font-size: 2em; /* Larger font size */
+                margin-bottom: 10px; /* Space below the subject */
+                border-bottom: 2px solid #E0E0E0; /* Underline for separation */
+                padding-bottom: 10px; /* Padding below the heading */
+            }
+
+        .message-details {
+            margin-top: 20px; /* Space above message details */
+            font-size: 1.1em; /* Font size for details */
+            color: #333; /* Dark grey for text */
+        }
+
+            .message-details strong {
+                color: #2C748B; /* Color for "From:" label */
+            }
+
+            .message-details a {
+                color: #2C748B; /* Link color */
+                text-decoration: none; /* Remove underline */
+            }
+
+                .message-details a:hover {
+                    text-decoration: underline; /* Underline on hover */
+                }
+
+        .message-content {
+            margin-top: 20px; /* Space above message content */
+        }
+
+            .message-content h3 {
+                color: #2C748B; /* Message heading color */
+                margin-bottom: 10px; /* Space below message heading */
+            }
+
+            .message-content p {
+                line-height: 1.6; /* Spacing between lines */
+                color: #555; /* Slightly lighter text color for the message body */
+            }
+    </style>
+}
+
+<div class="message-page">
+    <div class="message-container">
+        <h2>@Html.Raw(Model.Subject)</h2> <!-- Subject -->
+
+        <div class="message-details">
+            <p>
+                <strong>From:</strong> @Html.Raw(Model.Name) <!-- Sender Name -->
+                (<a href="mailto:@Model.Email">@Html.Raw(Model.Email)</a>) <!-- Sender Email -->
+            </p>
+
+            <div class="message-content">
+                <h3>Message:</h3> <!-- Message Heading -->
+                <p>@Html.Raw(Model.Message.Replace("\n", "<br/>"))</p> <!-- Message Body -->
+            </div>
+        </div>
+    </div>
+</div>

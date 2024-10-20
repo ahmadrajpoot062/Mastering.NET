@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Application.Services;
 using Core.Entities;
+using System.Numerics;
 
 namespace WEB.Controllers
 {
@@ -53,7 +54,10 @@ namespace WEB.Controllers
 
             return View(tcp);
         }
-
+        public IActionResult CareerPathways()
+        {
+            return View();
+        }
 
         [HttpGet]
         public async Task<IActionResult> topicsPartialViewUpdate(int page = 1, int pageSize = 6)
@@ -109,28 +113,14 @@ namespace WEB.Controllers
                 Name = name,
                 Email = email,
                 Subject = subject,
-                Message = message
+                Message = message,
+                IsRead = false
             };
 
             await _contactRepository.Add(contact);
 
             return Ok("Your message has been successfully sent.");
         }
-
-        public async Task<IActionResult> UserManual(string userManual)
-        {
-            var userManualURLs = userManual.Split(' ');
-
-            string userManualName = string.Join(" ", userManualURLs.Skip(1));
-
-            var userManualURL = userManualURLs[0];
-
-            string extension = Path.GetExtension(userManualURL)?.ToLower();
-
-            var model = new { UserManual = userManualURL, UserManualName = userManualName, Extension = extension };
-            return View(model);
-        }
-
 
         public async Task<IActionResult> viewProjectDetails()
         {
@@ -150,18 +140,37 @@ namespace WEB.Controllers
             return View(filteredLectures);
         }
 
-        public async Task<IActionResult> loadLectureName(int id)
-        {
-            Lecture lecture = await _lectureRepository.GetById(id);
-            return PartialView("_lectureNamePartial", lecture.LectureTitle);
-        }
-
         public async Task<string> loadLecture(int id)
         {
             Lecture lecture = await _lectureRepository.GetById(id);
             return lecture.htmlcontent;
         }
-
+        public async Task<IActionResult> Search(string topicName)
+        {
+            if (topicName == null)
+            {
+                return RedirectToAction("topicsPartialViewUpdate","Home");
+            }
+            else
+            {
+                List<Topic> list = await _topicRepository.GetAll();
+                var filteredList = list.Where(a => a.TopicName.Contains(topicName, StringComparison.OrdinalIgnoreCase)).ToList();
+                return PartialView("_allTopicsPartial", filteredList);
+            }
+        }
+        public async Task<IActionResult> SearchProjects(string projectName)
+        {
+            if (projectName == null)
+            {
+                return RedirectToAction("ProjectsPartialViewUpdate", "Home");
+            }
+            else
+            {
+                List<Project> list = await _projectRepository.GetAll();
+                var filteredList = list.Where(a => a.Title.Contains(projectName, StringComparison.OrdinalIgnoreCase)).ToList();
+                return PartialView("_allProjectsPartial", filteredList);
+            }
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -4,10 +4,10 @@
     @foreach (var lecture in Model)
     {
         <li class="lecture-item">
-            <a href="#" class="lecture-link d-flex align-items-center w-100" onclick="setActive(this); loadLectureName(@lecture.Id); loadLecture(@lecture.Id); return false;">
+            <a href="#" class="lecture-link d-flex align-items-center w-100" onclick="setActive(this); loadLecture(@lecture.Id); return false;">
                 @if (User.Identity.Name == "admin231@gmail.com")
                 {
-                    <i class="bi bi-trash delete-icon text-danger me-2" data-lecture-id="@lecture.Id" data-topic-id="@lecture.TopId" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" title="Delete"></i>
+                    <i class="bi bi-trash delete-icon text-danger me-2" data-lecture-id="@lecture.Id" data-topic-id="@lecture.TopId" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" title="Delete"></i>                    
                 }
                 <span class="lecture-title ">@lecture.LectureTitle</span>
             </a>

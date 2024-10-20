@@ -7,6 +7,16 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJVRZNHS3G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HJVRZNHS3G');
+    </script>
+
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>@ViewData["Title"] - Mastering.NET</title>
@@ -137,19 +147,19 @@
                     <img src="~/assets/img/logo.png" alt="">
                     <h1 class="sitename">Mastering .NET</h1>
                 </a>
-                <nav id="navmenu" class="navmenu me-5">
+                <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li><a href="#hero" class="active">Home<i class="bi bi-house fs-5"></i></a></li>
-                        <li><a href="#about">About<i class="bi bi-info-circle fs-5"></i></a></li>
+                        <li><a href="#hero" class="active">Home<i class="bi bi-house fs-5 ms-1"></i></a></li>
                         <li>
                             <a class="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
-                               aria-controls="offcanvasWithBothOptions">Topics<i class="bi bi-book fs-5"></i></a>
+                               aria-controls="offcanvasWithBothOptions">Topics<i class="bi bi-book fs-5 ms-1"></i></a>
                         </li>
-                        <li><a href="#contact" class="me-3">Contact<i class="bi bi-telephone fs-5"></i></a></li>
+                        <li><a href="#projects">Projects<i class="fa-solid fa-desktop fs-5 ms-1 text-secondary"></i></a></li>
+                        <li><a href="#about">About<i class="bi bi-info-circle fs-5 ms-1"></i></a></li>
+                        <li><a href="#contact">Contact<i class="bi bi-telephone fs-5 ms-1"></i></a></li>
                     </ul>
-                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                    <i class="mobile-nav-toggle d-md-none bi bi-list"></i>
                 </nav>
-                <partial name="_LoginPartial" />
             </div>
         </header>
 
@@ -230,9 +240,6 @@
         <!-- Bottom Section -->
         <div class="container mt-4 text-center animate-section" data-aos="fade-up" data-aos-delay="100">
             <p>© <strong>Mastering .NET</strong> All Rights Reserved</p>
-            <p class="credits">
-                Designed by <a href="https://www.linkedin.com/in/shujamughal/" target="_blank">Shuja-ur-Rehman Baig</a>
-            </p>
         </div>
     </footer>
 

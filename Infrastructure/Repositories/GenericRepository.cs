@@ -107,5 +107,30 @@ namespace Infrastructure.Repositories
                 throw;
             }
         }
+
+        public async Task Update(TEntity entity)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    var tableName = typeof(TEntity).Name;
+                    var primaryKey = "Id";
+
+                    var properties = typeof(TEntity).GetProperties().Where(p => p.Name != primaryKey && p.Name != "Image");
+
+                    var setClause = string.Join(",", properties.Select(p => $"{p.Name} = @{p.Name}"));
+                    var query = $"UPDATE {tableName} SET {setClause} WHERE {primaryKey} = @{primaryKey};";
+                    await connection.ExecuteAsync(query, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error! " + ex);
+                throw;
+            }
+        }
+
     }
 }

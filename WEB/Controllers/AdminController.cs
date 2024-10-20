@@ -64,30 +64,6 @@ namespace Mastering.NET.Controllers
             return PartialView("_leftNavPartial", filteredLectures);
         }
 
-
-        //public string getFilePath(IFormFile myFile)
-        //{
-        //    if (myFile != null && myFile.Length > 0)
-        //    {
-        //        string folderPath = Path.Combine("UploadedFiles", "TutorialNotes"); // Relative path from wwwroot
-        //        string fileName = Path.Combine(folderPath, Guid.NewGuid().ToString() + myFile.FileName);
-        //        string wwwRootPath = _env.WebRootPath;
-        //        if (!Directory.Exists(Path.Combine(wwwRootPath, folderPath))) // Check if path exists relative to wwwroot
-        //        {
-        //            Directory.CreateDirectory(Path.Combine(wwwRootPath, folderPath)); // Create directory if needed
-        //        }
-
-        //        string filePath = Path.Combine(wwwRootPath, fileName); // Full path for saving
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            myFile.CopyTo(fileStream);
-        //        }
-        //        return $"\\{fileName}"; // Return file path relative to wwwroot
-        //    }
-        //    return string.Empty;
-        //}
-
-
         [HttpPost]
         public async Task<IActionResult> DeleteLecture(int id, int topicid)
         {
@@ -112,9 +88,9 @@ namespace Mastering.NET.Controllers
 
 
         [HttpPost]
-        public async Task AddProject(string projectTitle, string projectDescription, string gitHubLink,IFormFile profileImage, List<IFormFile> projectImages, IFormFile userManual)
+        public async Task AddProject(string projectTitle, string projectDescription,IFormFile profileImage, List<IFormFile> projectImages)
         {
-            if (string.IsNullOrEmpty(projectTitle) || string.IsNullOrEmpty(projectDescription) || string.IsNullOrEmpty(gitHubLink))
+            if (string.IsNullOrEmpty(projectTitle) || string.IsNullOrEmpty(projectDescription))
             {
                 BadRequest("Invalid project data.");
             }
@@ -161,46 +137,12 @@ namespace Mastering.NET.Controllers
                 profileImg=$"\\{fileName3}"; // Return file path relative to wwwroot
             }
 
-            string userManualUrl = null;
-            string userManualName = null;
-            var newProject = new Project();
+            Project newProject = new Project();
 
-            if (userManual != null && userManual.Length > 0) 
-            {
-                string folderPath2 = Path.Combine("UploadedFiles", "ProjectUserManuals"); // Relative path from wwwroot
-                string fileName2 = Path.Combine(folderPath2, Guid.NewGuid().ToString() + userManual.FileName.Replace(" ", ""));
-                string wwwRootPath2 = _env.WebRootPath;
-                if (!Directory.Exists(Path.Combine(wwwRootPath2, folderPath2))) // Check if path exists relative to wwwroot
-                {
-                    Directory.CreateDirectory(Path.Combine(wwwRootPath2, folderPath2)); // Create directory if needed
-                }
-
-                string filePath2 = Path.Combine(wwwRootPath2, fileName2); // Full path for saving
-                using (var fileStream2 = new FileStream(filePath2, FileMode.Create))
-                {
-                    userManual.CopyTo(fileStream2);
-                }
-                userManualUrl = $"\\{fileName2}";
-                userManualName = userManual.FileName;
-
-
-                newProject.Title = projectTitle;
-                newProject.Description = projectDescription;
-                newProject.GitHubLink = gitHubLink;
-                newProject.ProfileImageURL= profileImg;
-                newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs
-                newProject.UserManual = userManualUrl + " " + userManualName;
-                
-            }
-            else
-            {
-                newProject.Title = projectTitle;
-                newProject.Description = projectDescription;
-                newProject.GitHubLink = gitHubLink;
-                newProject.ProfileImageURL = profileImg;
-                newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs
-                newProject.UserManual = null;
-            }
+            newProject.Title = projectTitle;
+            newProject.Description = projectDescription;
+            newProject.ProfileImageURL= profileImg;
+            newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs            
             
             await _projectRepository.Add(newProject);
         }
@@ -210,6 +152,35 @@ namespace Mastering.NET.Controllers
         public async Task DeleteProject(int id)
         {
             await _projectRepository.Delete(id);  
+        }
+
+        public async Task<IActionResult> MessageDetails(int id)
+        {
+            // Fetch the message by ID using the service/repository
+            var message = await _contactRepository.GetById(id);
+
+            // If no message is found, return a 404 page
+            if (message == null)
+            {
+                return NotFound();
+            }
+
+            message.IsRead = true;
+            await _contactRepository.Update(message);
+
+            // Pass the message details to the view
+            return View(message);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MessageDelete(int id)
+        {
+            Console.WriteLine(id);
+            // Your logic to delete the contact by ID
+            await _contactRepository.Delete(id); 
+
+            return PartialView("_sendMessagesPartial",await _contactRepository.GetAll());   
+
         }
 
     }

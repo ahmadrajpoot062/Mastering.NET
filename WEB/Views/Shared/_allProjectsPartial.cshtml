@@ -6,7 +6,7 @@
         <div class="container text-center">
             <div class="d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
                 <img src="~/assets/img/noMessageFound.png" class="img-fluid hero-img" alt="">
-                <h3 class="fst-italic fw-bold" style="color:#549DB4">[No Projects yet]<br></h3>
+                <h3 class="fst-italic fw-bold" style="color:#549DB4">[No Projects Found]<br></h3>
             </div>
         </div>
 
@@ -58,7 +58,7 @@ else
                             <div class="card-footer d-flex justify-content-between">
                                 <!-- View Details button -->
                                 <a type="button" class="btn text-white" style="background-color: #388DA8;" href="/Home/viewProjectDetails?id=@project.Id">
-                                    <i class="fa fa-solid fa-book me-1 text-white"></i>View Details
+                                    <i class="fa fa-solid fa-book me-1 text-white"></i>View Project
                                 </a>
                                 <!-- Delete button with red trash icon -->
                                 <a type="button" class="btn text-danger" data-bs-toggle="modal" data-bs-target="#SureModal" data-id="@project.Id" data-title="@project.Title" data-currentProject-page="@ViewBag.CurrentProjectPage" data-ProjectCount="@Model.Count()">
@@ -70,7 +70,7 @@ else
                         {
                             <div class="card-footer">
                                 <a type="button" class="btn text-white" style="background-color: #388DA8;" href="/Home/viewProjectDetails?id=@project.Id">
-                                    <i class="fa fa-solid fa-book me-1 text-white"></i>View Details
+                                    <i class="fa fa-solid fa-book me-1 text-white"></i>View Project
                                 </a>
                             </div>
                         }

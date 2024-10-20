@@ -103,6 +103,153 @@
             color: white;
         }
 
+
+        .btn-design-fill {
+            background-color: #388DA8;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-design-fill:hover {
+                background-color: #277080;
+                color:white;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .carousel-item {
+            position: relative;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0; /* Ensure it spans the full height */
+            display: flex; /* Use flexbox */
+            flex-direction:column;
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            text-align: center; /* Center text */
+            z-index: 2; /* Ensure caption is above overlay */
+            color: white; /* Optional: Change text color for better visibility */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+            z-index: 1; /* Ensure the overlay is below the caption */
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next{
+            z-index: 3; /* Ensure buttons are above overlay */
+        }
+
+        .carousel-indicators {
+            z-index: 4; /* Ensure indicators are above overlay */
+        }
+
+        .carousel-caption h1 {
+            font-family: 'Century Gothic';
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .carousel-caption p {
+            font-size: 1.5rem;
+            margin-top: 5px;
+            color: white;
+        }
+
+        .carousel-caption a.btn {
+            background-color: #388DA8;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size:16px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        @@media (max-width: 800px) {
+            .carousel-caption h1 {
+                font-size: 2.5rem; /* Reduce heading size */
+            }
+
+            .carousel-caption p {
+                font-size: 1.3rem; /* Reduce paragraph size */
+            }
+        }
+
+        @@media (max-width: 700px) {
+            .carousel-caption h1 {
+                font-size: 2rem; /* Reduce heading size */
+            }
+
+            .carousel-caption p {
+                font-size: 1.1rem; /* Reduce paragraph size */
+            }
+
+            .carousel-caption a.btn {
+                font-size: 15px; /* Reduce button font size */
+                padding: 7px 12px; /* Adjust button padding */
+            }
+        }
+
+        @@media (max-width: 600px) {
+            .carousel-caption h1 {
+                font-size: 1.5rem; /* Reduce heading size */
+            }
+
+            .carousel-caption p {
+                font-size: 0.9rem; /* Reduce paragraph size */
+            }
+
+            .carousel-caption a.btn {
+                font-size: 13px; /* Reduce button font size */
+                padding: 5px 10px; /* Adjust button padding */
+            }
+        }
+
+        @@media (max-width: 500px) {
+            .carousel-caption h1 {
+                font-size: 1rem; /* Reduce heading size */
+            }
+
+            .carousel-caption p {
+                font-size: 0.7rem; /* Reduce paragraph size */
+            }
+
+            .carousel-caption a.btn {
+                font-size: 10px; /* Reduce button font size */
+                padding: 5px 10px; /* Adjust button padding */
+            }
+        }
+        @@media (max-width: 400px) {
+            .carousel-caption h1 {
+                font-size: 0.8rem; /* Reduce heading size */
+            }
+    
+            .carousel-caption p {
+                font-size: 0.5rem; /* Reduce paragraph size */
+            }
+    
+            .carousel-caption a.btn {
+                font-size: 8px; /* Reduce button font size */
+                padding: 4px 7px; /* Adjust button padding */
+            }
+        }
+       
     </style>
 }
 
@@ -182,10 +329,6 @@
                         <label for="projectDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="projectDescription" name="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="gitHubLink" class="form-label">Link</label>
-                        <input type="url" class="form-control" id="gitHubLink" name="gitHubLink" placeholder="Enter GitHub link" required>
-                    </div>
                     <div class="mb-4">
                         <label for="profileImage" class="form-label">Upload Profile Image</label>
                         <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" required>
@@ -195,11 +338,6 @@
                         <label for="projectImages" class="form-label">Upload Project Images</label>
                         <input type="file" class="form-control" id="projectImages" name="projectImages" accept="image/*" multiple required>
                         <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="userManual" class="form-label">Upload User Manual</label>
-                        <input type="file" class="form-control" id="userManual" name="userManual" accept=".pdf,.doc,.docx">
-                        <small class="form-text text-muted">You can upload file of extension: .pdf, .doc, .docx.</small>
                     </div>
                     <div class="d-flex justify-content-center">
                         <button type="button" onclick="addProject();" class="btn text-white w-50 mt-4" style="background-color: #559DB4;">
@@ -256,7 +394,7 @@
 <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section ">
+@*     <section id="hero" class="hero section ">
         <div class="hero-bg">
             <img src="~/assets/img/hero-bg-light.webp" alt="">
         </div>
@@ -266,14 +404,36 @@
                 <p data-aos="fade-up" data-aos-delay="100">Quickly learn .NET now with ease!<i class="bi bi-hand-thumbs-up ms-1"></i><br></p>
             </div>
         </div>
-    </section>
+
+    </section> *@
+
+
+    <partial name="_cta" />
 
 
 
     <!--Topics Section-->
-    <div class="container section-title mt-5" data-aos="fade-up">
+    <div id="topicSection" class="container section-title mt-5" data-aos="fade-up">
         <h2>.NET Topics</h2>           
     </div>
+
+         @* Search button *@
+    <div class="container">
+        <div class="row">
+            <div class="col-10 col-sm-6 col-md-5 col-lg-4 ms-auto">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <div class="input-group shadow  mb-5" style="height: 45px;">
+                        <input id="topicName" type="search" class="border border-secondary form-control" placeholder="Search by Topic Name..." aria-label="Search">
+                        <button id="search" class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
     <div id="allTopicsDiv">
         <partial name="_allTopicsPartial" model="Model.PaginatedTopics" />
@@ -282,8 +442,24 @@
 
 
     <!--Projects Section-->
-    <div class="container section-title mt-5" data-aos="fade-up">
+    <div id="projects" class="container section-title mt-5" data-aos="fade-up">
         <h2>.NET Projects</h2>
+    </div>
+
+        @* Search button *@
+    <div class="container">
+        <div class="row">
+            <div class="col-10 col-sm-6 col-md-5 col-lg-4 ms-auto">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <div class="input-group shadow  mb-5" style="height: 45px;">
+                        <input id="projectName" type="search" class="border border-secondary form-control" placeholder="Search by Project Name..." aria-label="Search">
+                        <button id="searchProjects" class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div id="allProjectsDiv">
@@ -412,7 +588,7 @@
             <div class="row gy-4 mt-1">
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3399.316627966318!2d74.30704911009545!3d31.570364044564617!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39191ca7d960f837%3A0xc0bb6ddf0568a651!2sPunjab%20University%20College%20of%20Information%20Technology%20Old%20Campus!5e0!3m2!1sen!2s!4v1725917891907!5m2!1sen!2s"
-                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            class="w-100 h-100 me-1" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="col-lg-6">
@@ -448,7 +624,7 @@
 
             @if (User.Identity.Name == "admin231@gmail.com")
             {
-                <div class="row gy-4 mt-1">                    
+                <div id="msgs" class="row gy-4 mt-1">                    
                     <partial name="_sendMessagesPartial" model="Model.Contacts" />
                 </div>
             }
@@ -460,237 +636,44 @@
 
 
 @section Scripts {
-
-    @* JavaScript/jQuery to set the current topic page value when the modal is shown *@
-    <script>        
-        $('#addTutorialModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var currentPage = button.data('current-page');
-            var modal = $(this);  // Set the value to the hidden input field inside the modal
-            modal.find('#currentPage').val(currentPage);
-        });
-    </script> 
-
-
-    @* JavaScript/jQuery to set the current project page value when the modal is shown *@
     <script>
-        $('#addProjectModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var currentPage = button.data('currentproject-page');
-            var modal = $(this);
-            modal.find('#currentProjectPage').val(currentPage);
+        $(document).ready(function () {
+            // Delegate event to handle clicks on dynamically loaded delete icons
+            $(document).on('click', '.msg-delete-icon', function (event) {
+                event.stopPropagation(); // Prevent row click
+                var contactId = $(this).data('id');
+
+                // Show confirmation dialog
+                if (confirm("Are you sure you want to delete this contact?")) {
+                    // Perform the AJAX request to delete the contact
+                    $.ajax({
+                        url: '/Admin/MessageDelete',  // Adjust the URL if needed
+                        type: 'POST',
+                        data: { id: contactId },
+                        success: function (result) {
+                            // Update the messages section with the new content after deletion
+                            $('#msgs').html(result).fadeIn('slow');
+                        },
+                        error: function (xhr, status, error) {
+                            alert("An error occurred: " + error);
+                        }
+                    });
+                }
+            });
+
+            // Handling row clicks
+            $(document).on('click', 'td[data-href]', function (event) {
+                // Ensure the trash icon doesn't trigger the row click
+                if (!$(event.target).closest('.msg-delete-icon').length) {
+                    window.location.href = $(this).data('href');
+                }
+            });
         });
     </script>
+
+    <!-- Custom JavaScript -->
+	<script src="~/js/index.js"></script>
     
-
-    <script>
-        function addTutorial() {
-            var name = $('#tutorialName').val();
-            var currentPage = $('#currentPage').val(); 
-
-            $.ajax({
-                type: "POST", 
-                url: "/Admin/AddTutorial", 
-                data: { tutorialName: name },
-
-                success: function (result) {
-                    $('#offCanvasDiv').html(result).fadeIn('slow');
-                    topicNavBarUpdate();
-                    loadPage(currentPage);
-                    $('#addTutorialModal').modal('hide');
-                    $('#tutorialName').val('');
-                },
-                error: function () {
-                    alert('Failed to Add Tutorial.');
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        function loadPage(pageNumber) {
-            $.ajax({
-                url: '@Url.Action("topicsPartialViewUpdate", "Home")',
-                type: 'GET',
-                data: { page: pageNumber },
-                success: function (result) {
-                    $('#allTopicsDiv').html(result);
-                },
-                error: function () {
-                    alert('Error loading topics.');
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        function addProject() {
-            var formData = new FormData(document.getElementById("addProjectForm"));
-            var currentProjectPage = $('#currentProjectPage').val();
-
-            $.ajax({
-                url: '/Admin/AddProject',
-                type: 'POST',
-                data: formData,
-                contentType: false, 
-                processData: false, 
-                success: function () {
-                    loadProjectPage(currentProjectPage);
-                    $('#addProjectModal').modal('hide');
-                    $('#addProjectForm')[0].reset();
-                },
-                error: function (xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        function loadProjectPage(pageNumber) {
-            $.ajax({
-                url: '@Url.Action("ProjectsPartialViewUpdate", "Home")',
-                type: 'GET',
-                data: { page: pageNumber },
-                success: function (result) {
-                    $('#allProjectsDiv').html(result);
-                },
-                error: function () {
-                    alert('Error loading Projects.');
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        function topicNavBarUpdate() {
-            $.ajax({
-                type: "GET", 
-                url: "/Home/topicNavBarUpdate", 
-                success: function (result) {
-                    $('#topic-wrapper').html(result).fadeIn('slow');
-                    checkOverflow();
-                },
-                error: function () {
-                    alert('Failed to Update Topic Navbar.');
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        function sendMessage() {
-            var formData = new FormData(document.getElementById("sendMessageForm"));
-
-            fetch('/Home/sendMessage', {
-                method: 'POST',
-                body: new URLSearchParams(formData)
-            }) .then(response => {
-                    if (response.ok) {
-                        alert("Your message has been successfully sent!");
-                        document.getElementById("sendMessageForm").reset();
-                    } else {
-                        alert("There was an error submitting your message.");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("There was an error submitting your message.");
-                });
-        }
-    </script>
-
-
-    <script>
-        let tutorialIdToDelete = null; 
-
-        $(document).on('click', '.delete-tutorial-icon', function () {
-            tutorialIdToDelete = $(this).data('tutorial-id'); 
-            currentPage = $(this).data('current-page');
-            topicCount = $(this).data('topiccount');
-        });
-       
-        $('#confirmDeleteTutorialButton').on('click', function () {
-            if (tutorialIdToDelete) {
-                $.ajax({
-                    url: '@Url.Action("DeleteTutorial", "Admin")', 
-                    type: 'POST', 
-                    data: {
-                        id: tutorialIdToDelete 
-                    },
-                    success: function (result) {
-                        $('#offCanvasDiv').html(result).fadeIn('slow');
-                        topicNavBarUpdate();
-                        // Check if current page is not the first page and only one topic is left on the current page
-                        if (currentPage != 1 && topicCount == 1) {
-                            loadPage(currentPage - 1);    // If so, load the previous page                            
-                        }
-                        else {
-                            loadPage(currentPage);
-                        }
-
-                        $('#confirmDeleteTutorialModal').modal('hide');
-                    },
-                    error: function (xhr, status, error) {
-                        alert('An error occurred while deleting the Tutorial.');
-                    }
-                });
-            }
-        });
-    </script>
-
-
-    <script>
-        var sureModal = document.getElementById('SureModal');
-        sureModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-
-            var projectId = button.getAttribute('data-id');
-            var projectTitle = button.getAttribute('data-title');
-            var projectPage = button.getAttribute('data-currentProject-page');
-            var projectCount = button.getAttribute('data-ProjectCount');
-
-            var modalTitleElement = sureModal.querySelector('#modalProjectTitle');
-            modalTitleElement.textContent = projectTitle;
-
-            var confirmDeleteButton = sureModal.querySelector('#confirmDeleteProjectButton');
-            confirmDeleteButton.onclick = function () {
-                deleteProject(projectId,projectPage,projectCount);
-            };
-        });
-    </script>
-
-
-    <script>
-        function deleteProject(projectId, projectPage, projectCount) {
-            $.ajax({
-                url: '/Admin/DeleteProject',
-                type: 'POST',
-                data: { id: projectId },
-                success: function () {                   
-                    if (projectPage != 1 && projectCount == 1)
-                    {
-                        loadProjectPage(projectPage - 1);
-                    } 
-                    else
-                    {
-                        loadProjectPage(projectPage);
-                    }
-
-                    $('#SureModal').modal('hide');
-                },
-                error: function () {
-                    alert('An error occurred while deleting the project');
-                }
-            });
-        }
-	</script>
-
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 	<script src="~/js/signalr.js"></script>
 }

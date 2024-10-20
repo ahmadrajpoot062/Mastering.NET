@@ -30,5 +30,9 @@ namespace Application.Services
         {
             await _repository.Delete(id);
         }
+        public async Task Update(TEntity entity)
+        { 
+            await _repository.Update(entity); 
+        }
     }
 }

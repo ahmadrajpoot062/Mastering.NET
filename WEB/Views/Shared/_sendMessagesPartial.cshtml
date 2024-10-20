@@ -1,43 +1,45 @@
 ﻿@model List<Core.Entities.Contact>
 
-<!-- Testimonials Section -->
-<section id="testimonials" class="testimonials section light-background">
-
+<!-- Messages Section -->
+<section id="messages" class="messages section light-background">
     <div class="container section-title" data-aos="fade-up">
         <h2>Messages</h2>
-        <p>Below are the messages sent by different users for help!</p>
+        <p>Below are the messages sent by different users!</p>
     </div>
 
     @if (Model != null && Model.Any())
     {
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="swiper init-swiper swiper-container">
-                <div class="swiper-wrapper">
-                    @foreach (var contact in Model)
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="background-color:#388DA8; color:white;">Sender</th>
+                        <th scope="col" style="background-color:#388DA8; color:white;">Subject</th>
+                        <th scope="col" style="background-color:#388DA8; color:white;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var contact in Model.OrderByDescending(contact => contact.Id))
                     {
-                        <div class="swiper-slide">
-                            <div class="testimonial-item">
-                                <div>
-                                    <!-- Heading for Subject -->
-                                    <h3 style="color: #549DB4;">Subject</h3>
-                                    <p>@Html.Raw(@Html.Encode(contact.Subject))</p>
-                                </div>
-                                <div>
-                                    <!-- Heading for Message -->
-                                    <h3 style="color: #549DB4;">Message</h3>
-                                    <p>@Html.Raw(@Html.Encode(contact.Message))</p> 
-                                </div>
-                                <div class="profile mt-auto">
-                                    <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                                    <h3>@Html.Raw(@Html.Encode(contact.Name))</h3> 
-                                    <h4>@Html.Raw(@Html.Encode(contact.Email))</h4>
-                                </div>
-                            </div>
-                        </div>
+                        <tr>
+                            <!-- Sender Name -->
+                            <td style="font-weight: @(contact.IsRead ? "normal" : "bold"); cursor:pointer;"
+                                data-href="@Url.Action("MessageDetails", "Admin", new { id = contact.Id })">
+                                @Html.Raw(contact.Name)
+                            </td>
+                            <!-- Subject -->
+                            <td style="font-weight: @(contact.IsRead ? "normal" : "bold"); cursor:pointer;"
+                                data-href="@Url.Action("MessageDetails", "Admin", new { id = contact.Id })">
+                                @Html.Raw(contact.Subject)
+                            </td>
+                            <!-- delete icon -->
+                            <td>
+                                <i class="bi bi-trash text-danger me-1 msg-delete-icon" data-id="@contact.Id"></i>
+                            </td>
+                        </tr>
                     }
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+                </tbody>
+            </table>
         </div>
     }
     else
@@ -45,8 +47,10 @@
         <section>
             <div class="container text-center">
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <img src="~/assets/img/noMessageFound.png" class="img-fluid hero-img" alt="">
-                    <h3 data-aos="fade-up" class="fst-italic fw-bold" data-aos-delay="100" style="color:#549DB4">No messages yet.<br></h3>
+                    <img src="~/assets/img/noMessageFound.png" class="img-fluid hero-img" alt="No messages found">
+                    <h3 data-aos="fade-up" class="fst-italic fw-bold" data-aos-delay="100" style="color:#549DB4">
+                        No messages yet.<br>
+                    </h3>
                 </div>
             </div>
         </section>
