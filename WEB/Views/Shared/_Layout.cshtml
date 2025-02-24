@@ -24,224 +24,129 @@
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon-16x16.png">
-    <link rel="manifest" href="~/assets/img/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/myapple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/myfavicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/myfavicon-16x16.png">    
+    <link rel="manifest" href="~/assets/img/mysite.webmanifest">
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
-    <!-- Vendor CSS Files -->
+	<!-- Vendor CSS Files -->	
     <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    @* <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">	
-	<link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">        	
-	
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">        		
     <!-- Main CSS File -->
 	<link href="~/assets/css/main.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <style>
-
-        #topic-wrapper {
-            position: relative;
-            width: 100%;
-            height: 35px; 
-            background-color: #388DA8;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .scroll-arrow {
-            position: absolute;
-            top: 0;
-            width: 30px;
-            height: 100%;
-            display: none; 
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            background-color: #3B5E7D; 
-            color: white; 
-            z-index: 1000;
-            font-size: 1.5rem;
-        }
-
-        #scroll-left {
-            left: 0;
-        }
-
-        #scroll-right {
-            right: 0;
-        }
-
-        #topic-container {
-            flex-grow: 1;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            padding: 5px 40px; 
-            scroll-behavior: smooth;
-            height: 100%; 
-        }
-
-        #topic-container ul {
-            display: flex;
-            align-items: center;
-            height: 100%; 
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        #topic-container li {
-            display: flex;
-            align-items: center;
-            margin: 0 5px;
-            padding: 0;
-            height: 100%;
-        }
-
-        #topic-container li a {
-            text-decoration: none;
-            color: white;
-            padding: 5px 10px;
-            border: 1px solid white;
-            border-radius: 5px;
-            background-color: #4da2b3;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-
-        #topic-container li a:hover {
-            background-color: #336d83;
-        }
-
-        .selected-topic {
-            background-color: #336d83;
-        }
-
-    </style>
-
-
     @RenderSection("Styles", required: false)
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6126051708179187"
+            crossorigin="anonymous"></script>
 
 </head>
 
-<body>
+<body style="padding-top:70px;">
 
     <div class="fixed-top">
-        <header id="header" class="header d-flex align-items-center" style="height: 70px; z-index: 1000; width: 100%;">
+        <header id="header" class="header d-flex align-items-center shadow" style="height: 70px; z-index: 1000; width: 100%;">
             <div class="container-fluid container-xl position-relative d-flex align-items-center">
                 <a href="/Home/Index" class="logo d-flex align-items-center me-auto">
-                    <img src="~/assets/img/logo.png" alt="">
-                    <h1 class="sitename">Mastering .NET</h1>
+					<img loading="lazy" src="~/assets/img/mylogo.png" style="height:50px;"  />
+                    <h1 class="sitename ms-3 fwt-bold">Mastering.NET</h1>
                 </a>
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li><a href="#hero" class="active">Home<i class="bi bi-house fs-5 ms-1"></i></a></li>
-                        <li>
-                            <a class="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
-                               aria-controls="offcanvasWithBothOptions">Topics<i class="bi bi-book fs-5 ms-1"></i></a>
-                        </li>
-                        <li><a href="#projects">Projects<i class="fa-solid fa-desktop fs-5 ms-1 text-secondary"></i></a></li>
-                        <li><a href="#about">About<i class="bi bi-info-circle fs-5 ms-1"></i></a></li>
-                        <li><a href="#contact">Contact<i class="bi bi-telephone fs-5 ms-1"></i></a></li>
+                        <li><a href="/Home/Index#" class="@(ViewData["Title"] as string == "Home Page" ? "active" : "")">Home<i class="bi bi-house fs-5 ms-1"></i></a></li>
+                        <li><a href="/Home/Topics" class="@(ViewData["Title"] as string == "Topics" ? "active" : "")">Topics<i class="bi bi-book fs-5 ms-1"></i></a></li>
+                        <li><a href="/Home/Projects" class="@(ViewData["Title"] as string == "Projects" || ViewData["Title"] as string == "Project Details"  ? "active" : "")">Projects<i class="bi bi-globe fs-5 ms-1"></i></a></li>
+                        <li><a href="/Home/Index/#about">About<i class="bi bi-info-circle fs-5 ms-1"></i></a></li>
+                        <li><a href="/Home/Index/#contact">Contact<i class="bi bi-telephone fs-5 ms-1"></i></a></li>
                     </ul>
                     <i class="mobile-nav-toggle d-md-none bi bi-list"></i>
                 </nav>
             </div>
         </header>
 
-        <!-- Secondary navbar for topics -->
-        <div id="topic-wrapper" >
-            <partial name="_topicsNavBarPartial" model="await _topicRepository.GetAll()"/>
+        <div id="topic-wrapper">
+            <partial name="_topicsNavBarPartial" model="await _topicRepository.GetAll()" />
         </div>
-    </div>
 
+    </div>
 
     <!-- Main content -->
     @RenderBody()
-    
+
 
     <footer id="footer" class="mt-5 footer position-relative light-background py-4">
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="container">
             <div class="row gy-4">
                 <!-- About Section -->
-                <div class="col-lg-4 col-md-6 footer-about animate-section" data-aos="fade-up" data-aos-delay="150">
+                <div class="col-lg-4 col-md-6 footer-about animate-section">
                     <a href="Home/Index" class="logo d-flex align-items-center mb-3 logo-animate">
-                        <span class="sitename">Mastering .NET</span>
+                        <span class="sitename">Mastering.NET</span>
                     </a>
                     <p class="text-muted">
-                        Ph.D. in Computer Architecture from Universitat Politècnica de Catalunya, Spain. Experienced educator and
-                        researcher with expertise in Big Data, Cloud Computing, and Machine Learning.
+                        Your trusted resource for mastering .NET technologies. Explore courses, articles, and tutorials crafted to enhance your skills in software development.
                     </p>
                     <p class="mt-3">
-                        <strong>Email:</strong> <a href="mailto:shuja@pucit.edu.pk"
-                                                   class="text-decoration-none">shuja@pucit.edu.pk</a>
+                        <strong>Email:</strong> <a href="mailto:contact@masteringdotnet.com" class="text-decoration-none">contact@masteringdotnet.com</a>
                     </p>
                 </div>
 
                 <!-- Useful Links Section -->
-                <div class="col-lg-2 col-md-3 footer-links animate-section" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-4 col-md-3 footer-links animate-section">
                     <h4>Useful Links</h4>
                     <ul class="list-unstyled">
-                        <li><a href="#hero" class="active link-animate">Home</a></li>
-                        <li><a href="#about" class="link-animate">About Us</a></li>
-                        <li>
-                            <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
-                               aria-controls="offcanvasWithBothOptions" class="link-animate" style="cursor: pointer;">Tutorials</a>
-                        </li>
-                        <li><a href="#contact" class="link-animate">Contact Us</a></li>
-                    </ul>
-                </div>
-
-                <!-- Education Section -->
-                <div class="col-lg-3 col-md-6 footer-education animate-section" data-aos="fade-up" data-aos-delay="250">
-                    <h4>Education</h4>
-                    <ul class="list-unstyled">
-                        <li>Ph.D. Computer Architecture - UPC, Spain</li>
-                        <li>MS Computer Science - LUMS, Pakistan & Universität Paderborn, Germany</li>
-                        <li>BS Computer Science - PUCIT, Pakistan</li>
+                        <li><a href="/Home/Index#" class="link-animate">Home</a></li>
+                        <li><a href="/Home/Topics" class="link-animate">Topics</a></li>
+                        <li><a href="/Home/Projects" class="link-animate">Projects</a></li>
+                        <li><a href="/Home/Index/#about" class="link-animate">About Us</a></li>
+                        <li><a href="/Home/Index/#contact" class="link-animate">Contact Us</a></li>
                     </ul>
                 </div>
 
                 <!-- Social Links Section -->
-                <div class="col-lg-3 col-md-6 footer-social animate-section" data-aos="fade-up" data-aos-delay="300">
-                    <h4>Social links</h4>
+                <div class="col-lg-4 col-md-3 footer-social animate-section">
+                    <h4>Connect With Us</h4>
+                    <p class="text-muted">
+                        Stay connected with us and Reach out on any of our social media platforms if you have questions, need assistance, or just want to say hello.
+                        We're here to support and engage with our community!
+                    </p>
                     <div class="social-links d-flex mt-4">
-                        <a href="https://github.com/shujamughal" target="_blank" class="social-icon">
-                            <i class="bi bi-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/shujamughal/" target="_blank" class="social-icon">
-                            <i class="bi bi-linkedin"></i>
-                        </a>
-                        <a href="https://www.facebook.com/shujamughal" target="_blank" class="social-icon">
+                        <a href="https://www.facebook.com/share/VCmndHXPk4ejJKVN/" target="_blank" class="social-icon">
                             <i class="bi bi-facebook"></i>
                         </a>
-                        <a href="https://www.instagram.com/powerlatics/" target="_blank" class="social-icon">
+                        <a href="https://www.linkedin.com/company/masteringdotnet" target="_blank" class="social-icon">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/masteringdotnet/" target="_blank" class="social-icon">
                             <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="mailto:contact@masteringdotnet.com" target="_blank" class="social-icon">
+                            <i class="bi bi-envelope"></i>
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <!-- Bottom Section -->
-        <div class="container mt-4 text-center animate-section" data-aos="fade-up" data-aos-delay="100">
-            <p>© <strong>Mastering .NET</strong> All Rights Reserved</p>
+        <div class="container mt-4 text-center animate-section">
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="/Home/privacy_policy" class="text-muted link-animate">Privacy Policy</a></li>
+                <li class="list-inline-item"><span class="text-muted">|</span></li>
+                <li class="list-inline-item"><a href="/Home/terms_of_use" class="text-muted link-animate">Terms of Use</a></li>
+            </ul>
+            <p>© <strong>Mastering.NET</strong> All Rights Reserved </p>
         </div>
     </footer>
+
 
 
     <!-- Scroll Top -->
@@ -251,7 +156,7 @@
 
 
     <!-- Preloader -->
-    <div id="preloader"></div>
+  @*   <div id="preloader"></div> *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -266,78 +171,14 @@
 
      <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script src="~/js/layout.js"></script>
+
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var swiper = new Swiper('.swiper', {
-                loop: true,
-                speed: 600,
-                autoplay: {
-                    delay: 5000,
-                },
-                slidesPerView: 'auto',
-                pagination: {
-                    el: '.swiper-pagination',
-                    type: 'bullets',
-                    clickable: true,
-                },
-                breakpoints: {
-                    320: {
-                        slidesPerView: 1,
-                        spaceBetween: 40
-                    },
-                    1200: {
-                        slidesPerView: 3,
-                        spaceBetween: 1
-                    }
-                }
-            });
-        });
-    </script>
-
-
-    @* Detect content overflow and toggle arrow visibility *@
-    <script>
-        function checkOverflow() {
-            const container = document.getElementById('topic-container');
-            const scrollLeft = document.getElementById('scroll-left');
-            const scrollRight = document.getElementById('scroll-right');
-
-            // Check if the container content overflows horizontally
-            if (container.scrollWidth > container.clientWidth) {
-                scrollLeft.style.display = 'flex';
-                scrollRight.style.display = 'flex';
-            } else {
-                scrollLeft.style.display = 'none';
-                scrollRight.style.display = 'none';
-            }
-        }
-
-        // Scroll the topics when the arrows are clicked
-        document.getElementById('scroll-left').addEventListener('click', function () {
-            const container = document.getElementById('topic-container');
-            container.scrollBy({
-                left: -200, // Scroll left by 200px
-                behavior: 'smooth'
-            });
-        });
-
-        document.getElementById('scroll-right').addEventListener('click', function () {
-            const container = document.getElementById('topic-container');
-            container.scrollBy({
-                left: 200, // Scroll right by 200px
-                behavior: 'smooth'
-            });
-        });
-
-        // Run the overflow check on page load and on window resize
-        window.onload = checkOverflow;
-        window.onresize = checkOverflow;
-    </script>
-
-
     <partial name="_ValidationScriptsPartial" />;
+
 </body>
 </html>

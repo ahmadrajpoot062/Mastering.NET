@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Application.Services;
 using Core.Entities;
 using System.Numerics;
+using Microsoft.VisualBasic;
+using WEB.Models;
 
 namespace WEB.Controllers
 {
@@ -24,37 +26,20 @@ namespace WEB.Controllers
             _projectRepository = projectRepository;
         }
 
-        public async Task<IActionResult> Index(int topicPage = 1, int projectPage = 1, int pageSize = 6)
+        public async Task<IActionResult> Index()
         {
-            List<Topic> topics = await _topicRepository.GetAll();
             List<Contact> contacts = await _contactRepository.GetAll();
-            List<Project> projects = await _projectRepository.GetAll();
-
-            int totalTopics = topics.Count();
-            int totalTopicPages = (int)Math.Ceiling(totalTopics / (double)pageSize);
-            List<Topic> paginatedTopics = topics.Skip((topicPage - 1) * pageSize).Take(pageSize).ToList();
-
-            int totalProjects = projects.Count();
-            int totalProjectPages = (int)Math.Ceiling(totalProjects / (double)pageSize);
-            List<Project> paginatedProjects = projects.Skip((projectPage - 1) * pageSize).Take(pageSize).ToList();
-
-            TCPViewModel tcp = new TCPViewModel
-            {
-                Topic = topics,  
-                PaginatedTopics = paginatedTopics,
-                Contacts = contacts, 
-                PaginatedProjects = paginatedProjects 
-            };
-
-            ViewBag.CurrentPage = topicPage;
-            ViewBag.TotalPages = totalTopicPages;
-
-            ViewBag.CurrentProjectPage = projectPage;
-            ViewBag.TotalProjectPages = totalProjectPages;
-
-            return View(tcp);
+            return View(contacts);
         }
         public IActionResult CareerPathways()
+        {
+            return View();
+        }
+        public IActionResult privacy_policy()
+        {
+            return View();
+        }
+        public IActionResult terms_of_use()
         {
             return View();
         }
@@ -75,20 +60,36 @@ namespace WEB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProjectsPartialViewUpdate(int page = 1, int pageSize = 6)
+        public async Task<IActionResult> DotNetProjectsPartialViewUpdate(int page = 1, int pageSize = 6)
         {
             List<Project> projects = await _projectRepository.GetAll();
+            var dotNetProjects = projects.Where(p => p.ProjectType == ".NET").ToList();
 
-            int totalprojects = projects.Count();
+            int totalprojects = dotNetProjects.Count();
             int totalPages = (int)Math.Ceiling(totalprojects / (double)pageSize);
-            List<Project> paginatedProjects = projects.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            List<Project> paginatedProjects = dotNetProjects.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            ViewBag.CurrentProjectPage = page;
-            ViewBag.TotalProjectPages = totalPages;
+            ViewBag.CurrentDotNetPage = page;
+            ViewBag.TotalDotNetPages = totalPages;
 
-            return PartialView("_allProjectsPartial", paginatedProjects);
+            return PartialView("_dotNetProjectsPartial", paginatedProjects);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> BlazorProjectsPartialViewUpdate(int page = 1, int pageSize = 6)
+        {
+            List<Project> projects = await _projectRepository.GetAll();
+            var blazorProjects = projects.Where(p => p.ProjectType == "Blazor").ToList();
+
+            int totalprojects = blazorProjects.Count();
+            int totalPages = (int)Math.Ceiling(totalprojects / (double)pageSize);
+            List<Project> paginatedProjects = blazorProjects.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentBlazorPage = page;
+            ViewBag.TotalBlazorPages = totalPages;
+
+            return PartialView("_blazorProjectsPartial", paginatedProjects);
+        }
 
         [HttpGet]
         public async Task<IActionResult> topicNavBarUpdate()
@@ -96,6 +97,21 @@ namespace WEB.Controllers
             List<Topic> topics = await _topicRepository.GetAll();
 
             return PartialView("_topicsNavBarPartial", topics);
+        }
+
+        private void sanatize(Contact contact)
+        {
+
+            if (contact == null)
+            {
+                return;
+            }
+
+            contact.Email = System.Web.HttpUtility.HtmlEncode(contact.Email);
+            contact.Subject = System.Web.HttpUtility.HtmlEncode((string)contact.Subject);
+            contact.Message = System.Web.HttpUtility.HtmlEncode(contact.Message);
+            contact.Name = System.Web.HttpUtility.HtmlEncode(contact.Name);
+
         }
 
 
@@ -117,6 +133,8 @@ namespace WEB.Controllers
                 IsRead = false
             };
 
+            sanatize(contact);
+
             await _contactRepository.Add(contact);
 
             return Ok("Your message has been successfully sent.");
@@ -129,15 +147,63 @@ namespace WEB.Controllers
             return View(await _projectRepository.GetById(int.Parse(id)));
         }
 
-        public async Task<IActionResult> Topic(int id, string topicName)
+        public async Task<IActionResult> Topic(int id)
         {
             List<Lecture> lectures = await _lectureRepository.GetAll();
             var filteredLectures = lectures.Where(lecture => lecture.TopId == id).ToList();
 
-            ViewBag.TopicName = topicName;
+            var topic = await _topicRepository.GetById(id);
+
+            ViewBag.TopicName = topic?.TopicName;
             ViewBag.TopicId = id;
 
             return View(filteredLectures);
+        }
+
+        public async Task<IActionResult> Topics(int topicPage = 1,int pageSize = 6)
+        {
+            List<Topic> topics = await _topicRepository.GetAll();
+
+            int totalTopics = topics.Count();
+            int totalTopicPages = (int)Math.Ceiling(totalTopics / (double)pageSize);
+            List<Topic> paginatedTopics = topics.Skip((topicPage - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentPage = topicPage;
+            ViewBag.TotalPages = totalTopicPages;
+
+            return View(paginatedTopics);
+        }
+        public async Task<IActionResult> Projects(int dotNetPage = 1, int blazorPage = 1, int pageSize = 6)
+        {
+            List<Project> allProjects = await _projectRepository.GetAll();
+
+            // Filter projects by type
+            List<Project> dotNetProjects = allProjects.Where(p => p.ProjectType == ".NET").ToList();
+            List<Project> blazorProjects = allProjects.Where(p => p.ProjectType == "Blazor").ToList();
+
+            // Pagination for .NET projects
+            int totalDotNetProjects = dotNetProjects.Count();
+            int totalDotNetPages = (int)Math.Ceiling(totalDotNetProjects / (double)pageSize);
+            List<Project> paginatedDotNetProjects = dotNetProjects.Skip((dotNetPage - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pagination for Blazor projects
+            int totalBlazorProjects = blazorProjects.Count();
+            int totalBlazorPages = (int)Math.Ceiling(totalBlazorProjects / (double)pageSize);
+            List<Project> paginatedBlazorProjects = blazorProjects.Skip((blazorPage - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass data to the view
+            ViewBag.CurrentDotNetPage = dotNetPage;
+            ViewBag.TotalDotNetPages = totalDotNetPages;
+            ViewBag.CurrentBlazorPage = blazorPage;
+            ViewBag.TotalBlazorPages = totalBlazorPages;
+
+            var model = new ProjectsViewModel
+            {
+                DotNetProjects = paginatedDotNetProjects,
+                BlazorProjects = paginatedBlazorProjects
+            };
+
+            return View(model);
         }
 
         public async Task<string> loadLecture(int id)
@@ -158,20 +224,35 @@ namespace WEB.Controllers
                 return PartialView("_allTopicsPartial", filteredList);
             }
         }
-        public async Task<IActionResult> SearchProjects(string projectName)
+
+        public async Task<IActionResult> SearchDotNetProjects(string projectName)
         {
             if (projectName == null)
             {
-                return RedirectToAction("ProjectsPartialViewUpdate", "Home");
+                return RedirectToAction("DotNetProjectsPartialViewUpdate", "Home");
             }
             else
             {
                 List<Project> list = await _projectRepository.GetAll();
-                var filteredList = list.Where(a => a.Title.Contains(projectName, StringComparison.OrdinalIgnoreCase)).ToList();
-                return PartialView("_allProjectsPartial", filteredList);
+                var filteredList = list.Where(a => a.ProjectType == ".NET" && a.Title.Contains(projectName, StringComparison.OrdinalIgnoreCase)).ToList();
+                return PartialView("_dotNetProjectsPartial", filteredList);
             }
         }
 
+        public async Task<IActionResult> SearchBlazorProjects(string projectName)
+        {
+            if (projectName == null)
+            {
+                return RedirectToAction("BlazorProjectsPartialViewUpdate", "Home");
+            }
+            else
+            {
+                List<Project> list = await _projectRepository.GetAll();
+                var filteredList = list.Where(a => a.ProjectType == "Blazor" && a.Title.Contains(projectName, StringComparison.OrdinalIgnoreCase)).ToList();
+                return PartialView("_blazorProjectsPartial", filteredList);
+            }
+        }
+       
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

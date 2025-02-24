@@ -29,9 +29,28 @@ window.onresize = checkOverflow;
 // Navbar toggle functionality
 const toggleBtn = document.getElementById('toggleNavbar');
 const leftNavbar = document.getElementById('leftNavbar');
+
+const observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            if (leftNavbar.classList.contains('active')) {
+                toggleBtn.style.animation = 'none';
+                console.log('The "active" class is present on leftNavbar.');
+            } else {
+                toggleBtn.style.animation = 'pulse 0.3s infinite alternate';
+                console.log('The "active" class is not present on leftNavbar.');
+            }
+        }
+    });
+});
+
+// Start observing the leftNavbar for class changes
+observer.observe(leftNavbar, { attributes: true });
 toggleBtn.addEventListener('click', function () {
     leftNavbar.classList.toggle('active');
 });
+
+
 
 // AJAX load lecture
 function loadLecture(lectureId) {
@@ -39,8 +58,12 @@ function loadLecture(lectureId) {
         url: '/Home/loadLecture',
         type: 'GET',
         data: { id: lectureId },
-        success: function (response) {
+        success: function (response) {            
             $('#content-section').html(response).fadeIn('slow');
+            if (window.innerWidth <= 992) {
+                const leftNavbar = document.getElementById('leftNavbar');
+                leftNavbar.classList.toggle('active'); // Hide sidebar
+            }
         },
         error: function (xhr, status, error) {
             console.error(error);

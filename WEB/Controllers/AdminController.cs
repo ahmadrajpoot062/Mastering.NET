@@ -31,14 +31,10 @@ namespace Mastering.NET.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddTutorial(string tutorialName)
+        public async Task AddTutorial(string tutorialName)
         {
             Topic t = new Topic { TopicName = tutorialName };
             await _topicRepository.Add(t);
-
-            List<Topic> topics = await _topicRepository.GetAll();
-
-            return PartialView("_OffCanvasPartial", topics);
         }
 
 
@@ -77,25 +73,31 @@ namespace Mastering.NET.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> DeleteTutorial(int id)
+        public async Task DeleteTutorial(int id)
         {
             await _topicRepository.Delete(id);
-
-            List<Topic> topics = await _topicRepository.GetAll();
-
-            return PartialView("_OffCanvasPartial", topics);
         }
 
+        [HttpPost]
+        public async Task AddDotNetProject(string projectTitle, string projectDescription, IFormFile profileImage, List<IFormFile> projectImages)
+        {
+            await AddProject(projectTitle, projectDescription, profileImage, projectImages, ".NET");
+        }
 
         [HttpPost]
-        public async Task AddProject(string projectTitle, string projectDescription,IFormFile profileImage, List<IFormFile> projectImages)
+        public async Task AddBlazorProject(string projectTitle, string projectDescription, IFormFile profileImage, List<IFormFile> projectImages)
+        {
+            await AddProject(projectTitle, projectDescription, profileImage, projectImages, "Blazor");
+        }
+
+        private async Task AddProject(string projectTitle, string projectDescription, IFormFile profileImage, List<IFormFile> projectImages, string projectType)
         {
             if (string.IsNullOrEmpty(projectTitle) || string.IsNullOrEmpty(projectDescription))
             {
                 BadRequest("Invalid project data.");
             }
 
-            List<string> imageUrls = new List<string>();           
+            List<string> imageUrls = new List<string>();
 
             foreach (var image in projectImages)
             {
@@ -114,8 +116,8 @@ namespace Mastering.NET.Controllers
                     {
                         image.CopyTo(fileStream);
                     }
-                    imageUrls.Add( $"\\{fileName}"); // Return file path relative to wwwroot
-                }                
+                    imageUrls.Add($"\\{fileName}"); // Return file path relative to wwwroot
+                }
             }
 
             string profileImg = null;
@@ -134,24 +136,35 @@ namespace Mastering.NET.Controllers
                 {
                     profileImage.CopyTo(fileStream);
                 }
-                profileImg=$"\\{fileName3}"; // Return file path relative to wwwroot
+                profileImg = $"\\{fileName3}"; // Return file path relative to wwwroot
             }
 
             Project newProject = new Project();
 
             newProject.Title = projectTitle;
             newProject.Description = projectDescription;
-            newProject.ProfileImageURL= profileImg;
+            newProject.ProfileImageURL = profileImg;
             newProject.ImageUrls = string.Join(" ", imageUrls); // Space-separated image URLs            
-            
+            newProject.ProjectType = projectType;
+
             await _projectRepository.Add(newProject);
         }
 
+        [HttpPost]
+        public async Task DeleteDotNetProject(int id)
+        {
+            await DeleteProject(id);
+        }
 
         [HttpPost]
-        public async Task DeleteProject(int id)
+        public async Task DeleteBlazorProject(int id)
         {
-            await _projectRepository.Delete(id);  
+            await DeleteProject(id);
+        }
+
+        private async Task DeleteProject(int id)
+        {
+            await _projectRepository.Delete(id);
         }
 
         public async Task<IActionResult> MessageDetails(int id)

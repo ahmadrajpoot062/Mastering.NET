@@ -5,7 +5,7 @@
     <section>
         <div class="container text-center">
             <div class="d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
-                <img src="~/assets/img/noMessageFound.png" class="img-fluid hero-img" alt="">
+                <img loading="lazy" src="~/assets/img/noMessageFound.png" class="img-fluid hero-img" alt="">
                 <h3 class="fst-italic fw-bold" style="color:#549DB4">[No Topics Found]<br></h3>
             </div>
         </div>
@@ -30,7 +30,7 @@ else
             {
                 <div class="col">
                     <div class="card h-100 border-3 p-1 shadow " style="border-color: #549DB4;" data-aos="fade-up" data-aos-delay="200">
-                        <a href="@Url.Action("Topic", "Home", new { id = topic.Id , topicName = topic.TopicName})" class="card-body d-flex justify-content-center align-items-center text-center">
+                        <a href="@Url.Action("Topic", "Home", new { id = topic.Id })" class="card-body d-flex justify-content-center align-items-center text-center">
                             <p class="card-title fwt-bold text-decoration-none" style="display: inline-block; max-width: 100%;">
                                 @topic.TopicName
                             </p>
@@ -38,7 +38,7 @@ else
 
                         @if (User.Identity.Name == "admin231@gmail.com")
                         {
-                            <div class="card-footer d-flex justify-content-center">
+                            <div class="card-footer d-flex justify-content-end">
                                 <i class="bi bi-trash delete-tutorial-icon text-danger" data-tutorial-id="@topic.Id" data-current-page="@ViewBag.CurrentPage" data-bs-toggle="modal" data-bs-target="#confirmDeleteTutorialModal" data-topicCount="@Model.Count()" title="Delete" style="cursor: pointer;"></i>
                             </div>
                         }

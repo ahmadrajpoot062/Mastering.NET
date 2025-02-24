@@ -6,6 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
+
 (function() {
   "use strict";
 
@@ -59,14 +60,15 @@
   });
 
   /**
-   * Preloader
+   * 
+   * 
    */
-  const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
-  }
+  //const preloader = document.querySelector('#preloader');
+  //if (preloader) {
+  //  window.addEventListener('load', () => {
+  //    preloader.remove();
+  //  });
+  //}
 
   /**
    * Scroll top button

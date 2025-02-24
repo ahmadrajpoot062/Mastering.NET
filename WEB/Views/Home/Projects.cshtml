@@ -1,0 +1,194 @@
+﻿@using WEB.Models
+@{
+    ViewData["Title"] = "Projects";
+}
+
+@model ProjectsViewModel
+
+@section Styles{
+    <style>
+        .card {
+            border-radius: 10px;
+        }
+
+        .card-header {
+            font-weight: bold;
+            padding: 15px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-subtitle {
+            margin-bottom: 15px;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card a:hover {
+            background-color: #549DB4;
+            color: white;
+        }
+    </style>
+}
+
+<!-- Modal for adding new .NET Projects -->
+<div class="modal fade" id="addDotNetProjectModal" tabindex="-1" aria-labelledby="addDotNetProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDotNetProjectModalLabel">Add New .NET Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addDotNetProjectForm" enctype="multipart/form-data">
+                    <input type="hidden" id="currentProjectPage" value="" /> <!-- The value will be set by JavaScript -->
+                    <div class="mb-3">
+                        <label for="projectTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="projectTitle" name="projectTitle" placeholder="Enter project title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="projectDescription" name="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="profileImage" class="form-label">Upload Profile Image</label>
+                        <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" required>
+                        <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
+                    </div>
+                    <div class="mb-4">
+                        <label for="projectImages" class="form-label">Upload Project Images</label>
+                        <input type="file" class="form-control" id="projectImages" name="projectImages" accept="image/*" multiple required>
+                        <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" onclick="addDotNetProject();" class="btn text-white w-50 mt-4" style="background-color: #559DB4;">
+                            Add .NET Project
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for adding new Blazor Projects -->
+<div class="modal fade" id="addBlazorProjectModal" tabindex="-1" aria-labelledby="addBlazorProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBlazorProjectModalLabel">Add New Blazor Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addBlazorProjectForm" enctype="multipart/form-data">
+                    <input type="hidden" id="currentProjectPage" value="" /> <!-- The value will be set by JavaScript -->
+                    <div class="mb-3">
+                        <label for="projectTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="projectTitle" name="projectTitle" placeholder="Enter project title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="projectDescription" name="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="profileImage" class="form-label">Upload Profile Image</label>
+                        <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" required>
+                        <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
+                    </div>
+                    <div class="mb-4">
+                        <label for="projectImages" class="form-label">Upload Project Images</label>
+                        <input type="file" class="form-control" id="projectImages" name="projectImages" accept="image/*" multiple required>
+                        <small class="form-text text-muted">You can upload multiple images (JPEG, PNG, etc.).</small>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" onclick="addBlazorProject();" class="btn text-white w-50 mt-4" style="background-color: #559DB4;">
+                            Add Blazor Project
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sure Modal for deleting Project -->
+<div class="modal fade" id="SureModal" tabindex="-1" aria-labelledby="SureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="SureModalLabel">Are you sure?</h1>
+            </div>
+            <div class="modal-body">
+                <p class="mb-4">Do you want to delete the project <strong id="modalProjectTitle"></strong>?</p>
+                <button id="confirmDeleteProjectButton" class="btn btn-primary text-white border w-25">Yes</button>
+                <button type="button" class="btn btn-danger text-white w-25" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="main" style="padding:100px 0px;">
+
+    <!-- .NET Projects Section -->
+    <h2 id="dotNetProjects" style="font-family: 'Century Gothic'; font-size: 3rem; color: #333; font-weight: 700; margin-bottom: 100px;" class="text-center" data-aos="fade-up">
+        .NET <span style="color: #388DA8;">Projects</span>
+    </h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-10 col-sm-6 col-md-5 col-lg-4 ms-auto">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <div class="input-group shadow  mb-5" style="height: 45px;">
+                        <input id="dotNetProjectName" type="search" class="border border-secondary form-control" placeholder="Search by .NET Project Name..." aria-label="Search">
+                        <button id="searchDotNetProjects" class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="dotNetProjectsDiv">
+        <partial name="_dotNetProjectsPartial" model="Model.DotNetProjects" />
+    </div>
+
+    <!-- Blazor Projects Section -->
+    <h2 id="blazorProjects" style="font-family: 'Century Gothic'; font-size: 3rem; color: #333; font-weight: 700; margin-bottom: 100px; margin-top: 100px;" class="text-center" data-aos="fade-up">
+        Blazor <span style="color: #388DA8;">Projects</span>
+    </h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-10 col-sm-6 col-md-5 col-lg-4 ms-auto">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <div class="input-group shadow  mb-5" style="height: 45px;">
+                        <input id="blazorProjectName" type="search" class="border border-secondary form-control" placeholder="Search by Blazor Project Name..." aria-label="Search">
+                        <button id="searchBlazorProjects" class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="blazorProjectsDiv">
+        <partial name="_blazorProjectsPartial" model="Model.BlazorProjects" />
+    </div>
+
+</main>
+
+@section Scripts {
+    <!-- Custom JavaScript -->
+    <script src="~/js/dotNetProjects.js"></script>
+    <script src="~/js/blazorProjects.js"></script>
+
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr.js"></script>
+}

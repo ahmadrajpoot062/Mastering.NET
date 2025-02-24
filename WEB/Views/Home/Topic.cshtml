@@ -30,21 +30,19 @@
         <meta name="keywords" content="">
 
         <!-- Favicons -->
-        <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon-16x16.png">
-        <link rel="manifest" href="~/assets/img/site.webmanifest">
+        <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/myapple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/myfavicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/myfavicon-16x16.png">
+        <link rel="manifest" href="~/assets/img/mysite.webmanifest">
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com" rel="preconnect">
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
               rel="stylesheet">
         <!-- Vendor CSS Files -->
         <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        @* <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> *@
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-        <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <!-- Main CSS File -->
@@ -125,11 +123,12 @@
             }
 
             @@media (max-width: 992px) {
+
                 .toggle-btn {
                     display: block;
                     width: 50px;
                     position: fixed;
-                    bottom: 28px; 
+                    bottom: 28px;
                     right: 28px;
                     z-index: 1001;
                     font-size: 24px;
@@ -137,7 +136,18 @@
                     border: 3px solid #549DB4;
                     cursor: pointer;
                     color: #549DB4;
+                    animation: pulse 0.3s infinite alternate;
                 }
+
+                @@keyframes pulse {
+                    from {
+                        transform: scale(1);
+                    }
+                    to {
+                        transform: scale(1.1);
+                    }
+                }
+
         
                 .left-navbar {
                     position: fixed;
@@ -160,23 +170,26 @@
 
         </style>
 
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6126051708179187"
+                crossorigin="anonymous"></script>
     </head>
 
-
     <body>
-        <div class="fixed-top-custom">
-            <header id="header" class="header d-flex align-items-center" style="height: 70px;">
+
+        <div class="fixed-top">
+            <header id="header" class="header d-flex align-items-center shadow" style="height: 70px; z-index: 1000; width: 100%;">
                 <div class="container-fluid container-xl position-relative d-flex align-items-center">
                     <a href="/Home/Index" class="logo d-flex align-items-center me-auto">
-                        <img src="~/assets/img/logo.png" alt="">
-                        <h1 class="sitename">Mastering .NET</h1>
+                        <img loading="lazy" src="~/assets/img/mylogo.png" style="height:50px;" />
+                        <h1 class="sitename ms-3 fwt-bold">Mastering.NET</h1>
                     </a>
                     <nav id="navmenu" class="navmenu">
                         <ul>
-                            <li><a href="/Home/Index#hero" class="active">Home<i class="bi bi-house fs-5 ms-1"></i></a></li>
-                            <li><a href="/Home/Index#projects">Projects<i class="fa-solid fa-desktop fs-5 ms-1 text-secondary"></i></a></li>
-                            <li><a href="/Home/Index#about">About<i class="bi bi-info-circle fs-5 ms-1"></i></a></li>
-                            <li><a href="/Home/Index#contact">Contact<i class="bi bi-telephone fs-5 ms-1"></i></a></li>
+                            <li><a href="/Home/Index#">Home<i class="bi bi-house fs-5 ms-1"></i></a></li>
+                            <li><a href="/Home/Topics" class="active">Topics<i class="bi bi-book fs-5 ms-1"></i></a></li>
+                            <li><a href="/Home/Projects">Projects<i class="bi bi-globe fs-5 ms-1"></i></a></li>
+                            <li><a href="/Home/Index/#about">About<i class="bi bi-info-circle fs-5 ms-1"></i></a></li>
+                            <li><a href="/Home/Index/#contact">Contact<i class="bi bi-telephone fs-5 ms-1"></i></a></li>
                         </ul>
                         <i class="mobile-nav-toggle d-md-none bi bi-list"></i>
                     </nav>
@@ -187,6 +200,7 @@
             <div id="topic-wrapper">
                 <partial name="_topicsNavBarPartial" model="await _topicRepository.GetAll()" />
             </div>
+
         </div>
 
 
@@ -218,10 +232,10 @@
 
                 <!-- Main Content Section -->           
                 <div class="col-lg-9 content-area mt-2 mb-5">
-                <div id="content-section" class="mt-5" style="margin-right:15px">
+                    <div id="content-section" class="mt-5" style="margin-right:15px">
                         <div class="container text-center">
                             <div class="d-flex flex-column justify-content-center align-items-center" >
-                                <img src="~/assets/img/hero-services-img.png" style="height:300px; width:350px;" class="img-fluid hero-img" alt="">
+                                <img loading="lazy" src="~/assets/img/hero-services-img.png" style="height:230px; width:300px;" class="img-fluid hero-img" alt="">
                                 <p class="fst-italic fw-bold fs-4" style="color:#549DB4">Learn @ViewBag.TopicName with Mastering.NET </p>
                             </div>
                         </div>
@@ -284,7 +298,7 @@
 
 
         <!-- Preloader -->
-        <div id="preloader"></div>
+        @* <div id="preloader"></div> *@
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -299,7 +313,7 @@
         <script src="~/assets/js/main.js"></script>
 
         <!-- Custom JavaScript -->
-	    <script src="~/js/topic.js"></script>
+	    <script src="~/js/Topic.js"></script>
 
         <!-- Toastr JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

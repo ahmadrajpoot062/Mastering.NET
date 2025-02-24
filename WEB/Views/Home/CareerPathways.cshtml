@@ -1,271 +1,119 @@
 ﻿@{
-    Layout = null;
+    ViewData["Title"] = ".NET Career Pathways and Guidance";
 }
+    
 
-@using Application.Services
-@using Core.Entities
-
-@inject GenericService<Topic> _topicRepository
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>.NET Career Pathways and Guidance</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon-16x16.png">
-    <link rel="manifest" href="~/assets/img/site.webmanifest">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
-          rel="stylesheet">
-    <!-- Vendor CSS Files -->
-    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Main CSS File -->
-    <link href="~/assets/css/main.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-</head>
-
-<body>
-
-    <!-- Fixed Header Section -->
-    <div class="fixed-top-custom">
-        <header id="header" class="header d-flex align-items-center" style="height: 70px;">
-            <div class="container-fluid container-xl position-relative d-flex align-items-center">
-                <a href="/Home/Index" class="logo d-flex align-items-center me-auto">
-                    <img src="~/assets/img/logo.png" alt="">
-                    <h1 class="sitename">Mastering .NET</h1>
-                </a>
-                <nav id="navmenu" class="navmenu">
-                    <ul>
-                        <li><a href="/Home/Index#hero" class="active">Home<i class="bi bi-house fs-5 ms-1"></i></a></li>
-                        <li><a href="/Home/Index#projects">Projects<i class="fa-solid fa-desktop fs-5 ms-1 text-secondary"></i></a></li>
-                        <li><a href="/Home/Index#about">About<i class="bi bi-info-circle fs-5 ms-1"></i></a></li>
-                        <li><a href="/Home/Index#contact">Contact<i class="bi bi-telephone ms-1 fs-5"></i></a></li>
-                    </ul>
-                    <i class="mobile-nav-toggle d-md-none bi bi-list"></i>
-                </nav>
-            </div>
-        </header>
-
-        <!-- Secondary navbar for topics -->
-        <div id="topic-wrapper">
-            <partial name="_topicsNavBarPartial" model="await _topicRepository.GetAll()" />
+<!-- Main Content Section -->
+<div class="container" style="margin-bottom:100px;">
+    <div class="row mb-5 mt-3">
+        <div class="h2 fw-bold fst-italic text-center px-2 px-sm-0 shadow py-3 mt-5"
+                style="font-family: Verdana, Geneva, Tahoma, sans-serif; color: #549DB4;">
+            .NET Career Pathways and Guidance
         </div>
     </div>
 
-    <!-- Main Content Section -->
-    <div class="container mt-5" style="margin-bottom:100px;">
-        <div class="row mb-5" style="margin-top:100px;">
-            <div class="h2 fw-bold fst-italic text-center px-2 px-sm-0 shadow py-3 mt-5"
-                 style="font-family: Verdana, Geneva, Tahoma, sans-serif; color: #549DB4;">
-                .NET Career Pathways and Guidance
-            </div>
-        </div>
-
-        <div class="text-center">
-            <p style="font-size: 1.25rem; color: #444;">
-                Dive into the exciting world of .NET! Learn about the diverse career paths in the .NET ecosystem, from full-stack web development
-                to cloud computing, mobile app development, game development, and more. Whether you’re just starting out or looking to advance your skills,
-                we’ll guide you through everything you need to know to build a successful career with .NET.
-            </p>
-        </div>
-
-        <!-- Beginner Career Pathways -->
-        <div class="mt-5">
-            <h2 style="color:#388DA8; font-weight: bold;">Beginner Career Pathways</h2>
-            <p style="color: #444; font-size: 1.1rem;">
-                If you're new to .NET, this section is for you. Below is a roadmap to help you start your journey as a .NET developer.
-            </p>
-            <ul style="color: #444; font-size: 1.1rem;">
-                <li><strong>Step 1:</strong> <a href="https://dotnet.microsoft.com/learn/dotnet/what-is-dotnet" target="_blank">Learn about .NET and C# basics</a> - Get familiar with C#, the language most commonly used with .NET.</li>
-                <li><strong>Step 2:</strong> <a href="https://docs.microsoft.com/en-us/dotnet/core/introduction" target="_blank">Understanding .NET Core</a> - Learn about .NET Core, the framework for building cross-platform apps.</li>
-                <li><strong>Step 3:</strong> Build your first .NET Core console application or Web API</li>
-                <li><strong>Step 4:</strong> Explore essential development tools such as Visual Studio or Visual Studio Code.</li>
-                <li><strong>Step 5:</strong> Study object-oriented programming (OOP) concepts in C#.</li>
-                <li><strong>Step 6:</strong> Learn about version control with Git and GitHub.</li>
-                <li><strong>Step 7:</strong> Work through tutorials and projects on creating ASP.NET Core web applications.</li>
-                <li><strong>Step 8:</strong> Certification options: Microsoft Certified: .NET Fundamentals or C# programming certifications.</li>
-            </ul>
-        </div>
-
-        <!-- Intermediate Career Pathways -->
-        <div class="mt-5">
-            <h2 style="color:#388DA8; font-weight: bold;">Intermediate Career Pathways</h2>
-            <p style="color: #444; font-size: 1.1rem;">
-                After you've mastered the basics, it's time to advance your skills and explore different domains in .NET development.
-            </p>
-            <ul style="color: #444; font-size: 1.1rem;">
-                <li>Transition to Full-Stack Development with <a href="https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor" target="_blank">Blazor</a> and Razor Pages.</li>
-                <li>Build enterprise-level applications with ASP.NET Core MVC and Web APIs.</li>
-                <li>Learn about Entity Framework Core and managing databases with LINQ.</li>
-                <li>Master Dependency Injection and Service-Oriented Architectures (SOA).</li>
-                <li>Study essential design patterns for building robust applications.</li>
-                <li>Learn to write unit tests using xUnit and integration tests for ASP.NET applications.</li>
-                <li>Getting started with <a href="https://azure.microsoft.com/en-us/services/app-service/" target="_blank">Azure App Services</a> and Cloud Development.</li>
-                <li>Certification options: Microsoft Certified: Azure Developer Associate.</li>
-            </ul>
-        </div>
-
-        <!-- Advanced Career Pathways -->
-        <div class="mt-5">
-            <h2 style="color:#388DA8; font-weight: bold;">Advanced Career Pathways</h2>
-            <p style="color: #444; font-size: 1.1rem;">
-                For those looking to specialize or move into leadership roles, here are some advanced pathways to consider:
-            </p>
-            <ul style="color: #444; font-size: 1.1rem;">
-                <li>Become a Senior .NET Developer and lead large-scale projects.</li>
-                <li>Specialize in <a href="https://docs.microsoft.com/en-us/dotnet/maui/what-is-maui" target="_blank">Mobile Development with .NET MAUI</a> or Xamarin.</li>
-                <li>Dive deep into Cloud-Native development using Azure Functions, Azure Kubernetes Service (AKS), and microservices architecture with .NET.</li>
-                <li>Advanced database management and optimization with Entity Framework Core and SQL Server.</li>
-                <li>Implement CI/CD pipelines using Azure DevOps for efficient deployment and scaling of applications.</li>
-                <li>Game Development with Unity and C# for those interested in building games.</li>
-                <li>Pursue Microsoft Certified: DevOps Engineer Expert or Microsoft Certified: Solutions Architect Expert certifications.</li>
-            </ul>
-        </div>
-
-        <!-- Professional Growth and Certifications -->
-        <div class="mt-5">
-            <h2 style="color:#388DA8; font-weight: bold;">Professional Growth and Certifications</h2>
-            <p style="color: #444; font-size: 1.1rem;">
-                As you advance in your career, professional growth and certifications play an essential role in standing out in the job market.
-                Explore certification paths like Microsoft Certified: Azure Developer Associate, Microsoft Certified: DevOps Engineer Expert,
-                and Microsoft Certified: .NET Developer. These certifications demonstrate your expertise and commitment to excellence in the field.
-            </p>
-            <a href="https://www.microsoft.com/en-us/learning/dotnet.aspx" target="_blank" class="btn mt-4" style="background-color: #388DA8; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold;">
-                Explore More Certifications
-            </a>
-        </div>
-
-        <!-- Roadmap to Learn .NET -->
-        <div class="mt-5">
-            <h2 style="color:#388DA8; font-weight: bold;">Roadmap to Learn .NET</h2>
-            <p style="color: #444; font-size: 1.1rem;">
-                Below is a simple roadmap to help guide your learning journey in .NET. Follow these steps to become proficient and ready for a career in .NET development:
-            </p>
-            <ol style="color: #444; font-size: 1.1rem;">
-                <li><strong> Basics:</strong> Learn C#, the main programming language for .NET.</li>
-                <li><strong> OOP Concepts:</strong> Understand Object-Oriented Programming principles in C#.</li>
-                <li><strong> .NET Core:</strong> Get familiar with .NET Core for cross-platform development.</li>
-                <li><strong> Web Development:</strong> Dive into ASP.NET Core MVC and Web API for building web apps.</li>
-                <li><strong> Database Integration:</strong> Learn Entity Framework Core and SQL Server for managing data.</li>
-                <li><strong> Frontend Frameworks:</strong> Explore Blazor, Razor Pages, or integrate React/Angular with .NET.</li>
-                <li><strong> Cloud Development:</strong> Gain knowledge of Azure services and deploying .NET apps to the cloud.</li>
-                <li><strong> Testing:</strong> Learn to write unit tests and integration tests for your applications.</li>
-                <li><strong> CI/CD:</strong> Implement Continuous Integration and Deployment using Azure DevOps.</li>
-                <li><strong> Specialization:</strong> Choose a specialization: Web, Mobile, Cloud, or Game Development.</li>
-            </ol>
-        </div>
+    <div class="text-center">
+        <p style="font-size: 1.25rem; color: #444;">
+            Dive into the exciting world of .NET! Learn about the diverse career paths in the .NET ecosystem, from full-stack web development
+            to cloud computing, mobile app development, game development, and more. Whether you’re just starting out or looking to advance your skills,
+            we’ll guide you through everything you need to know to build a successful career with .NET.
+        </p>
     </div>
 
-    <footer id="footer" class="mt-5 footer position-relative light-background py-4">
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="row gy-4">
-                <!-- About Section -->
-                <div class="col-lg-4 col-md-6 footer-about animate-section" data-aos="fade-up" data-aos-delay="150">
-                    <a href="Home/Index" class="logo d-flex align-items-center mb-3 logo-animate">
-                        <span class="sitename">Mastering .NET</span>
-                    </a>
-                    <p class="text-muted">
-                        Ph.D. in Computer Architecture from Universitat Politècnica de Catalunya, Spain. Experienced educator and
-                        researcher with expertise in Big Data, Cloud Computing, and Machine Learning.
-                    </p>
-                    <p class="mt-3">
-                        <strong>Email:</strong> <a href="mailto:shuja@pucit.edu.pk"
-                                                   class="text-decoration-none">shuja@pucit.edu.pk</a>
-                    </p>
-                </div>
+    <!-- Beginner Career Pathways -->
+    <div class="mt-5">
+        <h2 style="color:#388DA8; font-weight: bold;">Beginner Career Pathways</h2>
+        <p style="color: #444; font-size: 1.1rem;">
+            If you're new to .NET, this section is for you. Below is a roadmap to help you start your journey as a .NET developer.
+        </p>
+        <ul style="color: #444; font-size: 1.1rem;">
+            <li><strong>Step 1:</strong> <a href="https://dotnet.microsoft.com/learn/dotnet/what-is-dotnet" target="_blank">Learn about .NET and C# basics</a> - Get familiar with C#, the language most commonly used with .NET.</li>
+            <li><strong>Step 2:</strong> <a href="https://docs.microsoft.com/en-us/dotnet/core/introduction" target="_blank">Understanding .NET Core</a> - Learn about .NET Core, the framework for building cross-platform apps.</li>
+            <li><strong>Step 3:</strong> Build your first .NET Core console application or Web API</li>
+            <li><strong>Step 4:</strong> Explore essential development tools such as Visual Studio or Visual Studio Code.</li>
+            <li><strong>Step 5:</strong> Study object-oriented programming (OOP) concepts in C#.</li>
+            <li><strong>Step 6:</strong> Learn about version control with Git and GitHub.</li>
+            <li><strong>Step 7:</strong> Work through tutorials and projects on creating ASP.NET Core web applications.</li>
+            <li><strong>Step 8:</strong> Certification options: Microsoft Certified: .NET Fundamentals or C# programming certifications.</li>
+        </ul>
+    </div>
 
-                <!-- Useful Links Section -->
-                <div class="col-lg-2 col-md-3 footer-links animate-section" data-aos="fade-up" data-aos-delay="200">
-                    <h4>Useful Links</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="Home/Index#hero" class="active link-animate">Home</a></li>
-                        <li><a href="Home/Index#about" class="link-animate">About Us</a></li>
-                        <li><a href="Home/Index#contact" class="link-animate">Contact Us</a></li>
-                    </ul>
-                </div>
+    <!-- Intermediate Career Pathways -->
+    <div class="mt-5">
+        <h2 style="color:#388DA8; font-weight: bold;">Intermediate Career Pathways</h2>
+        <p style="color: #444; font-size: 1.1rem;">
+            After you've mastered the basics, it's time to advance your skills and explore different domains in .NET development.
+        </p>
+        <ul style="color: #444; font-size: 1.1rem;">
+            <li>Transition to Full-Stack Development with <a href="https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor" target="_blank">Blazor</a> and Razor Pages.</li>
+            <li>Build enterprise-level applications with ASP.NET Core MVC and Web APIs.</li>
+            <li>Learn about Entity Framework Core and managing databases with LINQ.</li>
+            <li>Master Dependency Injection and Service-Oriented Architectures (SOA).</li>
+            <li>Study essential design patterns for building robust applications.</li>
+            <li>Learn to write unit tests using xUnit and integration tests for ASP.NET applications.</li>
+            <li>Getting started with <a href="https://azure.microsoft.com/en-us/services/app-service/" target="_blank">Azure App Services</a> and Cloud Development.</li>
+            <li>Certification options: Microsoft Certified: Azure Developer Associate.</li>
+        </ul>
+    </div>
 
-                <!-- Education Section -->
-                <div class="col-lg-3 col-md-6 footer-education animate-section" data-aos="fade-up" data-aos-delay="250">
-                    <h4>Education</h4>
-                    <ul class="list-unstyled">
-                        <li>Ph.D. Computer Architecture - UPC, Spain</li>
-                        <li>MS Computer Science - LUMS, Pakistan & Universität Paderborn, Germany</li>
-                        <li>BS Computer Science - PUCIT, Pakistan</li>
-                    </ul>
-                </div>
+    <!-- Advanced Career Pathways -->
+    <div class="mt-5">
+        <h2 style="color:#388DA8; font-weight: bold;">Advanced Career Pathways</h2>
+        <p style="color: #444; font-size: 1.1rem;">
+            For those looking to specialize or move into leadership roles, here are some advanced pathways to consider:
+        </p>
+        <ul style="color: #444; font-size: 1.1rem;">
+            <li>Become a Senior .NET Developer and lead large-scale projects.</li>
+            <li>Specialize in <a href="https://docs.microsoft.com/en-us/dotnet/maui/what-is-maui" target="_blank">Mobile Development with .NET MAUI</a> or Xamarin.</li>
+            <li>Dive deep into Cloud-Native development using Azure Functions, Azure Kubernetes Service (AKS), and microservices architecture with .NET.</li>
+            <li>Advanced database management and optimization with Entity Framework Core and SQL Server.</li>
+            <li>Implement CI/CD pipelines using Azure DevOps for efficient deployment and scaling of applications.</li>
+            <li>Game Development with Unity and C# for those interested in building games.</li>
+            <li>Pursue Microsoft Certified: DevOps Engineer Expert or Microsoft Certified: Solutions Architect Expert certifications.</li>
+        </ul>
+    </div>
 
-                <!-- Social Links Section -->
-                <div class="col-lg-3 col-md-6 footer-social animate-section" data-aos="fade-up" data-aos-delay="300">
-                    <h4>Social links</h4>
-                    <div class="social-links d-flex mt-4">
-                        <a href="https://github.com/shujamughal" target="_blank" class="social-icon">
-                            <i class="bi bi-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/shujamughal/" target="_blank" class="social-icon">
-                            <i class="bi bi-linkedin"></i>
-                        </a>
-                        <a href="https://www.facebook.com/shujamughal" target="_blank" class="social-icon">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                        <a href="https://www.instagram.com/powerlatics/" target="_blank" class="social-icon">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Professional Growth and Certifications -->
+    <div class="mt-5">
+        <h2 style="color:#388DA8; font-weight: bold;">Professional Growth and Certifications</h2>
+        <p style="color: #444; font-size: 1.1rem;">
+            As you advance in your career, professional growth and certifications play an essential role in standing out in the job market.
+            Explore certification paths like Microsoft Certified: Azure Developer Associate, Microsoft Certified: DevOps Engineer Expert,
+            and Microsoft Certified: .NET Developer. These certifications demonstrate your expertise and commitment to excellence in the field.
+        </p>
+        <a href="https://www.microsoft.com/en-us/learning/dotnet.aspx" target="_blank" class="btn mt-4" style="background-color: #388DA8; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold;">
+            Explore More Certifications
+        </a>
+    </div>
 
-        <!-- Bottom Section -->
-        <div class="container mt-4 text-center animate-section" data-aos="fade-up" data-aos-delay="100">
-            <p>© <strong>Mastering .NET</strong> All Rights Reserved</p>
-        </div>
-    </footer>
+    <!-- Roadmap to Learn .NET -->
+    <div class="mt-5">
+        <h2 style="color:#388DA8; font-weight: bold;">Roadmap to Learn .NET</h2>
+        <p style="color: #444; font-size: 1.1rem;">
+            Below is a simple roadmap to help guide your learning journey in .NET. Follow these steps to become proficient and ready for a career in .NET development:
+        </p>
+        <ol style="color: #444; font-size: 1.1rem;">
+            <li><strong> Basics:</strong> Learn C#, the main programming language for .NET.</li>
+            <li><strong> OOP Concepts:</strong> Understand Object-Oriented Programming principles in C#.</li>
+            <li><strong> .NET Core:</strong> Get familiar with .NET Core for cross-platform development.</li>
+            <li><strong> Web Development:</strong> Dive into ASP.NET Core MVC and Web API for building web apps.</li>
+            <li><strong> Database Integration:</strong> Learn Entity Framework Core and SQL Server for managing data.</li>
+            <li><strong> Frontend Frameworks:</strong> Explore Blazor, Razor Pages, or integrate React/Angular with .NET.</li>
+            <li><strong> Cloud Development:</strong> Gain knowledge of Azure services and deploying .NET apps to the cloud.</li>
+            <li><strong> Testing:</strong> Learn to write unit tests and integration tests for your applications.</li>
+            <li><strong> CI/CD:</strong> Implement Continuous Integration and Deployment using Azure DevOps.</li>
+            <li><strong> Specialization:</strong> Choose a specialization: Web, Mobile, Cloud, or Game Development.</li>
+        </ol>
+    </div>
+</div>
 
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
-        <i class="bi bi-arrow-up-short"></i>
-    </a>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <!-- Vendor JS Files -->
-    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/vendor/php-email-form/validate.js"></script>
-    <script src="~/assets/vendor/aos/aos.js"></script>
-    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-    <!-- Main JS File -->
-    <script src="~/assets/js/main.js"></script>
-
+  
+@section Scripts
+{
     <!-- Custom JavaScript -->
     <script src="~/js/viewprojectdetails.js"></script>
+}
 
-    <!-- Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <!-- SignalR -->
-    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
-    <script src="~/js/signalr.js"></script>
-
-</body>
-</html>
 
 
 
