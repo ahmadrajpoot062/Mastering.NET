@@ -4,18 +4,25 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-WEB-bfbc4ca6-7f5b-495b-b62c-42cfdf8516b5</UserSecretsId>
+    <UserSecretsId>aspnet-Web-e3fa2e06-5dba-4d98-b2d6-d2f7430b6c0b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.39.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Markdig" Version="0.40.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 

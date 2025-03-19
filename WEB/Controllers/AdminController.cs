@@ -1,11 +1,9 @@
 ﻿using Application.Services;
 using Core.Entities;
 using Infrastructure.Hubs;
-using Mastering.NET.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Mastering.NET.Controllers
 {

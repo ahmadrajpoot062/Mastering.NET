@@ -8,15 +8,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Mastering.NET.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Mastering.NET.Models;
 
-namespace Mastering.NET.Areas.Identity.Pages.Account
+namespace Web.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {

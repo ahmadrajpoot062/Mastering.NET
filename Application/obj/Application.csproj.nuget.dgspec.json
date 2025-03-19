@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Application\\Application.csproj": {}
+    "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Application\\Application.csproj": {}
   },
   "projects": {
-    "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Application\\Application.csproj": {
+    "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Application\\Application.csproj",
+        "projectUniqueName": "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Application\\Application.csproj",
+        "projectPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\mmob3\\.nuget\\packages\\",
-        "outputPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Application\\obj\\",
+        "outputPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mmob3\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Core\\Core.csproj": {
-                "projectPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Core\\Core.csproj"
+              "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Core\\Core.csproj": {
+                "projectPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Core\\Core.csproj"
               }
             }
           }
@@ -52,15 +52,39 @@
           "dependencies": {
             "Dapper": {
               "target": "Package",
-              "version": "[2.1.35, )"
+              "version": "[2.1.66, )"
+            },
+            "Markdig": {
+              "target": "Package",
+              "version": "[0.40.0, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
             },
             "Microsoft.AspNetCore.SignalR": {
               "target": "Package",
-              "version": "[1.1.0, )"
+              "version": "[1.2.0, )"
             },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[5.2.2, )"
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -83,14 +107,14 @@
         }
       }
     },
-    "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Core\\Core.csproj": {
+    "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Core\\Core.csproj",
+        "projectPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\mmob3\\.nuget\\packages\\",
-        "outputPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\masteringdotnetMVC\\Core\\obj\\",
+        "outputPath": "D:\\study material\\SEMESTER 6\\SCD\\Project\\Mastering.NET\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mmob3\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -127,7 +151,11 @@
           "dependencies": {
             "Dapper": {
               "target": "Package",
-              "version": "[2.1.35, )"
+              "version": "[2.1.66, )"
+            },
+            "Markdig": {
+              "target": "Package",
+              "version": "[0.40.0, )"
             },
             "Microsoft.AspNetCore.Http.Features": {
               "target": "Package",
@@ -135,11 +163,27 @@
             },
             "Microsoft.AspNetCore.SignalR": {
               "target": "Package",
-              "version": "[1.1.0, )"
+              "version": "[1.2.0, )"
             },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[5.2.2, )"
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

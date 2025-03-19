@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
+using Web.Data;
 
-namespace Mastering.NET.Data.Migrations
+namespace Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
@@ -72,7 +73,7 @@ namespace Mastering.NET.Data.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.myAppUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");

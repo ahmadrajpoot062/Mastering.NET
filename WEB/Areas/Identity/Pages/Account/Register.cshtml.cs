@@ -138,7 +138,7 @@ namespace Mastering.NET.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    List<Claim> claims = new List<Claim> { new Claim(ClaimTypes.Email, Input.Email)};
+                    List<Claim> claims = new List<Claim> { new Claim(ClaimTypes.Email, Input.Email) };
                     await _userManager.AddClaimsAsync(user, claims);
 
                     var userId = await _userManager.GetUserIdAsync(user);

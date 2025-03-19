@@ -4,14 +4,14 @@
 
 using System;
 using System.Threading.Tasks;
-using Mastering.NET.Models;
 using Microsoft.AspNetCore.Authorization;
+using Mastering.NET.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace Mastering.NET.Areas.Identity.Pages.Account
+namespace Web.Areas.Identity.Pages.Account
 {
     public class LogoutModel : PageModel
     {

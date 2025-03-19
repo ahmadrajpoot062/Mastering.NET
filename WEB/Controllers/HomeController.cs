@@ -1,10 +1,8 @@
+using Application.Services;
+using Core.Entities;
 using Mastering.NET.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Application.Services;
-using Core.Entities;
-using System.Numerics;
-using Microsoft.VisualBasic;
 using WEB.Models;
 
 namespace WEB.Controllers
